@@ -1,0 +1,566 @@
+1@ghvy,105,57,2	script	Exodus Enchanter	10121,{
+	disable_command;
+	disable_items; 
+	set @ecrystal,0;
+	.@npc$ = "[ ^0000FFExodus Enchanter^000000 ]";
+	mes .@npc$,   
+		"What would you like to enchant or to Buy Enchanted Crytal?";
+		switch(select("Enchant:Buy Enchanted Crystal")){ 
+		case 1:
+	next;
+	switch(select("Cancel.","Enchant Magic Armor","Enchant Magic Accessory","Enchant Magic Garment","Enchant Magic Headgear","Enchant Magic Shoes","Enchant Magic Shield","Enchant Magic Weapon")){ 
+		case 1:
+			mes .@npc$,
+				"Please drop by anytime.";
+			close;
+		break;
+		 
+		case 2:// Enchant Magic Armor
+			set .@part,EQI_ARMOR; // Save equip location
+			mes .@npc$;
+			.@itemEqId = getequipid(.@part);
+			if(.@itemEqId == -1) {
+				mes "I don't see anything, please make sure you've equipped the item.";
+				close;
+			}
+			 
+			mes "<ITEM>^ff0000" + getitemname(.@itemEqId) + "^000000<INFO>" + .@itemEqId + "</INFO></ITEM>" + .@str$ + " It will cost you " + .cost + " <ITEM>^ff0000Enchanted Crystal^000000<INFO>6671</INFO></ITEM> to try enchants. Do you want to continue?";
+			next;
+			if(select("No.","Continue.") == 1){
+				mes .@npc$,
+					"Please drop by anytime.";
+				close;
+			}
+			
+			if(.cost > countitem(.itemId)){
+				mes .@npc$,
+					"You're missing " + (.cost - countitem(.itemId)),
+					"<ITEM>^ff0000Enchanted Crystal^000000<INFO>6671</INFO></ITEM>.";
+				close;
+			}
+			
+			delitem .itemId,.cost;
+			.@opt1rand = rand(getarraysize(.RandOpt1_Armor)-1);
+			.@opt2rand = rand(getarraysize(.RandOpt1_Armor)-1);
+			.@opt3rand = rand(getarraysize(.RandOpt1_Armor)-1);
+			.@opt4rand = rand(getarraysize(.RandOpt2_Armor)-1);
+
+	
+			.@Opt1 = .RandOpt1_Armor[.@opt1rand];
+			.@Opt2 = .RandOpt1_Armor[.@opt2rand];
+			.@Opt3 = .RandOpt1_Armor[.@opt3rand];
+			.@Opt4 = .RandOpt2_Armor[.@opt4rand];
+			.@Opt1_V = rand(.RandOpt1_Armor_minV[.@opt1rand],.RandOpt1_Armor_maxV[.@opt1rand]);
+			.@Opt2_V = rand(.RandOpt1_Armor_minV[.@opt2rand],.RandOpt1_Armor_maxV[.@opt2rand]);
+			.@Opt3_V = rand(.RandOpt1_Armor_minV[.@opt3rand],.RandOpt1_Armor_maxV[.@opt3rand]);
+			.@Opt4_V = rand(.RandOpt2_Armor_minV[.@opt4rand],.RandOpt2_Armor_maxV[.@opt4rand]);
+			setrandomoption(.@part,0,.@Opt1,.@Opt1_V,0);
+			setrandomoption(.@part,1,.@Opt2,.@Opt2_V,0);
+			setrandomoption(.@part,2,.@Opt3,.@Opt3_V,0);
+			setrandomoption(.@part,3,.@Opt4,.@Opt4_V,0);
+			specialeffect2 1031;
+			announce strcharinfo(0)+" Has Successfully Enchanted his GEAR!",0;
+
+			mes .@npc$,
+				"There you are, come back any time and try your luck again!";
+			close;
+		break;
+	
+		case 3:
+			.@part = select("Left Accessory.","Right Accessory.") - 1;
+			mes .@npc$;
+			.@itemEqId = getequipid(.@part);
+			if(.@itemEqId == -1) {
+				mes "I don't see anything, please make sure you've equipped the item.";
+				close;
+			}
+			
+			mes "<ITEM>^ff0000" + getitemname(.@itemEqId) + "^000000<INFO>" + .@itemEqId + "</INFO></ITEM>" + .@str$ + " It will cost you " + .cost + " <ITEM>^ff0000Enchanted Crystal^000000<INFO>6671</INFO></ITEM> to try enchants. Do you want to continue?";
+			next;
+			if(select("No.","Continue.") == 1){
+				mes .@npc$,
+					"Please drop by anytime.";
+				close;
+			}
+			
+			if(.cost > countitem(.itemId)){
+				mes .@npc$,
+					"You're missing " + (.cost - countitem(.itemId)),
+					"<ITEM>^ff0000Enchanted Crystal^000000<INFO>6671</INFO></ITEM>.";
+				close;
+			}
+			 
+			delitem .itemId,.cost;
+
+			.@opt1rand = rand(getarraysize(.RandOpt1_Armor)-1);
+			.@opt2rand = rand(getarraysize(.RandOpt1_Armor)-1);
+			.@opt3rand = rand(getarraysize(.RandOpt1_Armor)-1);
+			.@opt4rand = rand(getarraysize(.RandOpt1_Armor)-1);
+	
+			.@Opt1 = .RandOpt1_Armor[.@opt1rand];
+			.@Opt2 = .RandOpt1_Armor[.@opt2rand];
+			.@Opt3 = .RandOpt1_Armor[.@opt3rand];
+			.@Opt4 = .RandOpt1_Armor[.@opt4rand]; 
+			.@Opt1_V = rand(.RandOpt1_Armor_minV[.@opt1rand],.RandOpt1_Armor_maxV[.@opt1rand]);
+			.@Opt2_V = rand(.RandOpt1_Armor_minV[.@opt2rand],.RandOpt1_Armor_maxV[.@opt2rand]);
+			.@Opt3_V = rand(.RandOpt1_Armor_minV[.@opt3rand],.RandOpt1_Armor_maxV[.@opt3rand]);
+			.@Opt4_V = rand(.RandOpt1_Armor_minV[.@opt4rand],.RandOpt1_Armor_maxV[.@opt4rand]);
+			setrandomoption(.@part,0,.@Opt1,.@Opt1_V,0);
+			setrandomoption(.@part,1,.@Opt2,.@Opt2_V,0);
+			setrandomoption(.@part,2,.@Opt3,.@Opt3_V,0);
+			setrandomoption(.@part,3,.@Opt4,.@Opt4_V,0); 
+				announce strcharinfo(0)+" Has Successfully Enchanted his GEAR!",0;
+
+			specialeffect2 1031; 
+			mes .@npc$,
+				"There you are, come back any time and try your luck again!";
+			close;
+		break;
+		
+		case 4:// Enchant Magic Armor
+			set .@part,EQI_GARMENT; // Save equip location
+			mes .@npc$;
+			.@itemEqId = getequipid(.@part);
+			if(.@itemEqId == -1) {
+				mes "I don't see anything, please make sure you've equipped the item.";
+				close;
+			}
+			 
+			mes "<ITEM>^ff0000" + getitemname(.@itemEqId) + "^000000<INFO>" + .@itemEqId + "</INFO></ITEM>" + .@str$ + " It will cost you " + .cost + " <ITEM>^ff0000Enchanted Crystal^000000<INFO>6671</INFO></ITEM> to try enchants. Do you want to continue?";
+			next;
+			if(select("No.","Continue.") == 1){
+				mes .@npc$,
+					"Please drop by anytime.";
+				close;
+			}
+			
+			if(.cost > countitem(.itemId)){
+				mes .@npc$,
+					"You're missing " + (.cost - countitem(.itemId)),
+					"<ITEM>^ff0000Enchanted Crystal^000000<INFO>6671</INFO></ITEM>.";
+				close;
+			}
+			
+			delitem .itemId,.cost;
+			.@opt1rand = rand(getarraysize(.RandOpt1_Armor)-1);
+			.@opt2rand = rand(getarraysize(.RandOpt1_Armor)-1);
+			.@opt3rand = rand(getarraysize(.RandOpt1_Armor)-1);
+			.@opt4rand = rand(getarraysize(.RandOpt3_Armor)-1);
+
+	
+			.@Opt1 = .RandOpt1_Armor[.@opt1rand];
+			.@Opt2 = .RandOpt1_Armor[.@opt2rand];
+			.@Opt3 = .RandOpt1_Armor[.@opt3rand];
+			.@Opt4 = .RandOpt3_Armor[.@opt4rand];
+			.@Opt1_V = rand(.RandOpt1_Armor_minV[.@opt1rand],.RandOpt1_Armor_maxV[.@opt1rand]);
+			.@Opt2_V = rand(.RandOpt1_Armor_minV[.@opt2rand],.RandOpt1_Armor_maxV[.@opt2rand]);
+			.@Opt3_V = rand(.RandOpt1_Armor_minV[.@opt3rand],.RandOpt1_Armor_maxV[.@opt3rand]);
+			.@Opt4_V = rand(.RandOpt3_Armor_minV[.@opt4rand],.RandOpt3_Armor_maxV[.@opt4rand]);
+			setrandomoption(.@part,0,.@Opt1,.@Opt1_V,0);
+			setrandomoption(.@part,1,.@Opt2,.@Opt2_V,0);
+			setrandomoption(.@part,2,.@Opt3,.@Opt3_V,0);
+			setrandomoption(.@part,3,.@Opt4,.@Opt4_V,0);
+			specialeffect2 1031;
+			announce strcharinfo(0)+" Has Successfully Enchanted his GEAR!",0;
+
+			mes .@npc$,
+				"There you are, come back any time and try your luck again!";
+			close;
+		break;
+			case 5:// Enchant Magic Armor
+			set .@part,EQI_HEAD_TOP; // Save equip location
+			mes .@npc$;
+			.@itemEqId = getequipid(.@part);
+			if(.@itemEqId == -1) {
+				mes "I don't see anything, please make sure you've equipped the item.";
+				close;
+			}
+			 
+			mes "<ITEM>^ff0000" + getitemname(.@itemEqId) + "^000000<INFO>" + .@itemEqId + "</INFO></ITEM>" + .@str$ + " It will cost you " + .cost + " <ITEM>^ff0000Enchanted Crystal^000000<INFO>6671</INFO></ITEM> to try enchants. Do you want to continue?";
+			next;
+			if(select("No.","Continue.") == 1){
+				mes .@npc$,
+					"Please drop by anytime.";
+				close;
+			}
+			
+			if(.cost > countitem(.itemId)){
+				mes .@npc$,
+					"You're missing " + (.cost - countitem(.itemId)),
+					"<ITEM>^ff0000Enchanted Crystal^000000<INFO>6671</INFO></ITEM>.";
+				close;
+			}
+			
+			delitem .itemId,.cost;
+			.@opt1rand = rand(getarraysize(.RandOpt1_Armor)-1);
+			.@opt2rand = rand(getarraysize(.RandOpt1_Armor)-1);
+			.@opt3rand = rand(getarraysize(.RandOpt1_Armor)-1);
+			.@opt4rand = rand(getarraysize(.RandOpt3_Armor)-1);
+
+	
+			.@Opt1 = .RandOpt1_Armor[.@opt1rand];
+			.@Opt2 = .RandOpt1_Armor[.@opt2rand];
+			.@Opt3 = .RandOpt1_Armor[.@opt3rand];
+			.@Opt4 = .RandOpt3_Armor[.@opt4rand];
+			.@Opt1_V = rand(.RandOpt1_Armor_minV[.@opt1rand],.RandOpt1_Armor_maxV[.@opt1rand]);
+			.@Opt2_V = rand(.RandOpt1_Armor_minV[.@opt2rand],.RandOpt1_Armor_maxV[.@opt2rand]);
+			.@Opt3_V = rand(.RandOpt1_Armor_minV[.@opt3rand],.RandOpt1_Armor_maxV[.@opt3rand]);
+			.@Opt4_V = rand(.RandOpt3_Armor_minV[.@opt4rand],.RandOpt3_Armor_maxV[.@opt4rand]);
+			setrandomoption(.@part,0,.@Opt1,.@Opt1_V,0);
+			setrandomoption(.@part,1,.@Opt2,.@Opt2_V,0);
+			setrandomoption(.@part,2,.@Opt3,.@Opt3_V,0);
+			setrandomoption(.@part,3,.@Opt4,.@Opt4_V,0);
+			specialeffect2 1031;
+			announce strcharinfo(0)+" Has Successfully Enchanted his GEAR!",0;
+
+			mes .@npc$,
+				"There you are, come back any time and try your luck again!";
+			close;
+		break;
+		
+			case 6:// Enchant Magic Armor
+			set .@part,EQI_SHOES; // Save equip location
+			mes .@npc$;
+			.@itemEqId = getequipid(.@part);
+			if(.@itemEqId == -1) {
+				mes "I don't see anything, please make sure you've equipped the item.";
+				close;
+			}
+			 
+			mes "<ITEM>^ff0000" + getitemname(.@itemEqId) + "^000000<INFO>" + .@itemEqId + "</INFO></ITEM>" + .@str$ + " It will cost you " + .cost + " <ITEM>^ff0000Enchanted Crystal^000000<INFO>6671</INFO></ITEM> to try enchants. Do you want to continue?";
+			next;
+			if(select("No.","Continue.") == 1){
+				mes .@npc$,
+					"Please drop by anytime.";
+				close;
+			}
+			
+			if(.cost > countitem(.itemId)){
+				mes .@npc$,
+					"You're missing " + (.cost - countitem(.itemId)),
+					"<ITEM>^ff0000Enchanted Crystal^000000<INFO>6671</INFO></ITEM>.";
+				close;
+			}
+			
+			delitem .itemId,.cost;
+			.@opt1rand = rand(getarraysize(.RandOpt1_Armor)-1);
+			.@opt2rand = rand(getarraysize(.RandOpt1_Armor)-1);
+			.@opt3rand = rand(getarraysize(.RandOpt1_Armor)-1);
+			.@opt4rand = rand(getarraysize(.RandOpt3_Armor)-1);
+
+	
+			.@Opt1 = .RandOpt1_Armor[.@opt1rand];
+			.@Opt2 = .RandOpt1_Armor[.@opt2rand];
+			.@Opt3 = .RandOpt1_Armor[.@opt3rand];
+			.@Opt4 = .RandOpt3_Armor[.@opt4rand];
+			.@Opt1_V = rand(.RandOpt1_Armor_minV[.@opt1rand],.RandOpt1_Armor_maxV[.@opt1rand]);
+			.@Opt2_V = rand(.RandOpt1_Armor_minV[.@opt2rand],.RandOpt1_Armor_maxV[.@opt2rand]);
+			.@Opt3_V = rand(.RandOpt1_Armor_minV[.@opt3rand],.RandOpt1_Armor_maxV[.@opt3rand]);
+			.@Opt4_V = rand(.RandOpt3_Armor_minV[.@opt4rand],.RandOpt3_Armor_maxV[.@opt4rand]);
+			setrandomoption(.@part,0,.@Opt1,.@Opt1_V,0);
+			setrandomoption(.@part,1,.@Opt2,.@Opt2_V,0);
+			setrandomoption(.@part,2,.@Opt3,.@Opt3_V,0);
+			setrandomoption(.@part,3,.@Opt4,.@Opt4_V,0);
+			specialeffect2 1031;
+			announce strcharinfo(0)+" Has Successfully Enchanted his GEAR!",0;
+
+			mes .@npc$,
+				"There you are, come back any time and try your luck again!";
+			close;
+		break;
+		
+				case 7:// Enchant Magic Armor
+			set .@part,EQI_HAND_L; // Save equip location
+			mes .@npc$;
+			.@itemEqId = getequipid(.@part);
+			if(.@itemEqId == -1) {
+				mes "I don't see anything, please make sure you've equipped the item.";
+				close;
+			}
+			 
+			mes "<ITEM>^ff0000" + getitemname(.@itemEqId) + "^000000<INFO>" + .@itemEqId + "</INFO></ITEM>" + .@str$ + " It will cost you " + .cost + " <ITEM>^ff0000Enchanted Crystal^000000<INFO>6671</INFO></ITEM> to try enchants. Do you want to continue?";
+			next;
+			if(select("No.","Continue.") == 1){
+				mes .@npc$,
+					"Please drop by anytime.";
+				close;
+			}
+			
+			if(.cost > countitem(.itemId)){
+				mes .@npc$,
+					"You're missing " + (.cost - countitem(.itemId)),
+					"<ITEM>^ff0000Enchanted Crystal^000000<INFO>6671</INFO></ITEM>.";
+				close;
+			}
+			
+			delitem .itemId,.cost;
+			.@opt1rand = rand(getarraysize(.RandOpt1_Armor)-1);
+			.@opt2rand = rand(getarraysize(.RandOpt1_Armor)-1);
+			.@opt3rand = rand(getarraysize(.RandOpt1_Armor)-1);
+			.@opt4rand = rand(getarraysize(.RandOpt3_Armor)-1);
+ 
+	
+			.@Opt1 = .RandOpt1_Armor[.@opt1rand];
+			.@Opt2 = .RandOpt1_Armor[.@opt2rand];
+			.@Opt3 = .RandOpt1_Armor[.@opt3rand];
+			.@Opt4 = .RandOpt3_Armor[.@opt4rand];
+			.@Opt1_V = rand(.RandOpt1_Armor_minV[.@opt1rand],.RandOpt1_Armor_maxV[.@opt1rand]);
+			.@Opt2_V = rand(.RandOpt1_Armor_minV[.@opt2rand],.RandOpt1_Armor_maxV[.@opt2rand]);
+			.@Opt3_V = rand(.RandOpt1_Armor_minV[.@opt3rand],.RandOpt1_Armor_maxV[.@opt3rand]);
+			.@Opt4_V = rand(.RandOpt3_Armor_minV[.@opt4rand],.RandOpt3_Armor_maxV[.@opt4rand]);
+			setrandomoption(.@part,0,.@Opt1,.@Opt1_V,0);
+			setrandomoption(.@part,1,.@Opt2,.@Opt2_V,0);
+			setrandomoption(.@part,2,.@Opt3,.@Opt3_V,0);
+			setrandomoption(.@part,3,.@Opt4,.@Opt4_V,0);
+			specialeffect2 1031;
+			announce strcharinfo(0)+" Has Successfully Enchanted his GEAR!",0;
+
+			mes .@npc$,
+				"There you are, come back any time and try your luck again!";
+			close;
+		break;
+		
+				case 8:// Enchant Magic Armor
+			set .@part,EQI_HAND_R; // Save equip location
+			mes .@npc$;
+			.@itemEqId = getequipid(.@part);
+			if(.@itemEqId == -1) {
+				mes "I don't see anything, please make sure you've equipped the item.";
+				close;
+			}
+			 
+			mes "<ITEM>^ff0000" + getitemname(.@itemEqId) + "^000000<INFO>" + .@itemEqId + "</INFO></ITEM>" + .@str$ + " It will cost you " + .cost + " <ITEM>^ff0000Enchanted Crystal^000000<INFO>6671</INFO></ITEM> to try enchants. Do you want to continue?";
+			next;
+			if(select("No.","Continue.") == 1){
+				mes .@npc$,
+					"Please drop by anytime.";
+				close;
+			}
+			
+			if(.cost > countitem(.itemId)){
+				mes .@npc$,
+					"You're missing " + (.cost - countitem(.itemId)),
+					"<ITEM>^ff0000Enchanted Crystal^000000<INFO>6671</INFO></ITEM>.";
+				close;
+			}
+			
+			delitem .itemId,.cost;
+			.@opt1rand = rand(getarraysize(.RandOpt6_Armor)-1);
+			.@opt2rand = rand(getarraysize(.RandOpt6_Armor)-1);
+			.@opt3rand = rand(getarraysize(.RandOpt4_Armor)-1);
+			.@opt4rand = rand(getarraysize(.RandOpt5_Armor)-1);
+
+	
+			.@Opt1 = .RandOpt6_Armor[.@opt1rand];
+			.@Opt2 = .RandOpt6_Armor[.@opt2rand];
+			.@Opt3 = .RandOpt4_Armor[.@opt3rand];
+			.@Opt4 = .RandOpt5_Armor[.@opt4rand];
+			.@Opt1_V = rand(.RandOpt6_Armor_minV[.@opt1rand],.RandOpt6_Armor_maxV[.@opt1rand]);
+			.@Opt2_V = rand(.RandOpt6_Armor_minV[.@opt2rand],.RandOpt6_Armor_maxV[.@opt2rand]);
+			.@Opt3_V = rand(.RandOpt4_Armor_minV[.@opt3rand],.RandOpt4_Armor_maxV[.@opt3rand]);
+			.@Opt4_V = rand(.RandOpt5_Armor_minV[.@opt4rand],.RandOpt5_Armor_maxV[.@opt4rand]);
+			setrandomoption(.@part,0,.@Opt1,.@Opt1_V,0);
+			setrandomoption(.@part,1,.@Opt2,.@Opt2_V,0);
+			setrandomoption(.@part,2,.@Opt3,.@Opt3_V,0);
+			setrandomoption(.@part,3,.@Opt4,.@Opt4_V,0);
+			specialeffect2 1031;
+			announce strcharinfo(0)+" Has Successfully Enchanted his GEAR!",0;
+
+			mes .@npc$,
+				"There you are, come back any time and try your luck again!";
+			close;
+		break;
+		}
+		break;
+		case 2:
+		next;
+		mes "^ff000010 Enchanted Crystal Cost, 1 artist Token, 30 Woe Badge, 50m zeny^000000";
+		next;
+		mes"Do you want to buy?";
+		switch(select("Yes:No")){
+		case 1:
+		next;
+		mes "Input How many enchanted crystal you want to buy";
+		input @ecrystal;
+		if( @ecrystal == 0){
+		mes "You Input Wrong Value";
+		close;
+		}
+		if(Zeny >= (50000000*@ecrystal) &&  countitem(41025) >= (1* @ecrystal) && countitem(41100) >= (30 * @ecrystal)){
+		mes "Here you go";
+		set Zeny, Zeny-(50000000 * @ecrystal);
+		delitem 41025,1 * @ecrystal;
+		delitem 41100,30 * @ecrystal;
+		getitem 54001,10 * @ecrystal;  
+		close;
+		}
+		break;
+		case 2:
+		mes "Goodbye";
+		close;
+		break;
+		}}
+end;
+OnInit:
+	.cost = 1;
+	.itemId = 60000;
+	
+setarray .RandOpt1_Armor[0],RDMOPT_VAR_STRAMOUNT, 			// str 1 ~ 4
+							RDMOPT_VAR_AGIAMOUNT,			// agi 1 ~ 4
+							RDMOPT_VAR_VITAMOUNT,			// vit 1 ~ 4
+							RDMOPT_VAR_INTAMOUNT,			// int 1 ~ 4
+							RDMOPT_VAR_DEXAMOUNT,			// dex 1 ~ 4
+							RDMOPT_VAR_LUKAMOUNT,			// luk 1 ~ 4
+							RDMOPT_VAR_MAXHPPERCENT,		// MAX HP 3% ~ 5%
+							RDMOPT_VAR_MAXSPPERCENT,		// MAX SP 3% ~ 5%
+								RDMOPT_VAR_PLUSASPDPERCENT,		// ASPD 3% ~ 5%
+								RDMOPT_DEC_SPELL_CAST_TIME,		// Variable Cast Reduction	5% ~ 7%
+								RDMOPT_DAMAGE_CRI_TARGET,		// Critical Damage	5% ~ 8%
+								RDMOPT_ATTR_TOLERACE_WATER,		// Water Resistance	3% ~ 5%
+								RDMOPT_ATTR_TOLERACE_GROUND,	// Earth Resistance	3% ~ 5%
+								RDMOPT_ATTR_TOLERACE_FIRE,		// Fire Resistance	3% ~ 5%
+								RDMOPT_ATTR_TOLERACE_WIND,		// Wind  Resistance	3% ~ 5%
+								RDMOPT_DEC_SP_CONSUMPTION,		// Decreases SP consumption	3% ~ 5%
+								RDMOPT_VAR_ATKPERCENT,			// Attack 1% ~ 3%
+								RDMOPT_VAR_MAGICATKPERCENT,		// Magic Attack 1% ~ 3%
+								RDMOPT_RANGE_ATTACK_DAMAGE_TARGET,
+								RDMOPT_DEC_SPELL_DELAY_TIME,
+								RDMOPT_VAR_AVOIDSUCCESSVALUE,
+								RDMOPT_VAR_PLUSAVOIDSUCCESSVALUE,
+								RDMOPT_VAR_HITSUCCESSVALUE;
+		
+setarray .RandOpt1_Armor_minV[0],1,1,1,1,1,1,3,3,3,5,5,3,3,3,3,5,1,1,1,3,5,3,5;
+setarray .RandOpt1_Armor_maxV[0],10,10,10,10,10,10,5,5,10,10,10,5,5,5,5,10,5,5,5,5,10,5,10; 
+
+setarray .RandOpt2_Armor[0],RDMOPT_VAR_HPACCELERATION, 		// 50% ~ 100%  
+							RDMOPT_VAR_SPACCELERATION,		// 50% ~ 100%
+							RDMOPT_VAR_HITSUCCESSVALUE,		// Hit 15 ~ 30
+							RDMOPT_VAR_AVOIDSUCCESSVALUE,	// Flee 15 ~ 30
+							RDMOPT_VAR_MAXHPPERCENT,		// MAX HP 3% ~ 5%
+							RDMOPT_VAR_MAXSPPERCENT,		// MAX SP 3% ~ 5%
+							RDMOPT_VAR_MDEFPOWER,			// Magic Def 5 ~ 10
+							RDMOPT_HEAL_MODIFY_PERCENT,		// Heal Power 5% ~ 10%
+							//RDMOPT_HEAL_MODIFY_PERCENT,	// Healing Received	5% ~ 10% TODO
+							RDMOPT_DEC_SPELL_CAST_TIME,		// Variable Cast Reduction	5% ~ 10%
+							RDMOPT_BODY_INDESTRUCTIBLE,		// Unbreakable Armor
+							RDMOPT_BODY_ATTR_WATER,			// Water Property
+							RDMOPT_BODY_ATTR_FIRE,			// Fire Property
+							RDMOPT_BODY_ATTR_GROUND,		// Earth Property
+							RDMOPT_BODY_ATTR_WIND,		// Wind Property
+							RDMOPT_VAR_PLUSAVOIDSUCCESSVALUE,
+							RDMOPT_DEC_SPELL_DELAY_TIME; 	
+setarray .RandOpt2_Armor_minV[0],50,50,25,25,5,5,5,5,5,0,0,0,0,0,5,10;
+setarray .RandOpt2_Armor_maxV[0],100,100,50,50,20,20,20,20,50,0,0,0,0,0,30,30;
+
+setarray .RandOpt3_Armor[0],RDMOPT_VAR_STRAMOUNT, 			// str 1 ~ 4
+							RDMOPT_VAR_AGIAMOUNT,			// agi 1 ~ 4
+							RDMOPT_VAR_VITAMOUNT,			// vit 1 ~ 4
+							RDMOPT_VAR_INTAMOUNT,			// int 1 ~ 4
+							RDMOPT_VAR_DEXAMOUNT,			// dex 1 ~ 4
+							RDMOPT_VAR_LUKAMOUNT,			// luk 1 ~ 4
+							RDMOPT_VAR_MAXHPPERCENT,		// MAX HP 3% ~ 5%
+							RDMOPT_VAR_MAXSPPERCENT,		// MAX SP 3% ~ 5%
+								RDMOPT_VAR_PLUSASPDPERCENT,		// ASPD 3% ~ 5%
+								RDMOPT_DEC_SPELL_CAST_TIME,		// Variable Cast Reduction	5% ~ 7%
+								RDMOPT_DAMAGE_CRI_TARGET,		// Critical Damage	5% ~ 8%
+								RDMOPT_ATTR_TOLERACE_WATER,		// Water Resistance	3% ~ 5%
+								RDMOPT_ATTR_TOLERACE_GROUND,	// Earth Resistance	3% ~ 5%
+								RDMOPT_ATTR_TOLERACE_FIRE,		// Fire Resistance	3% ~ 5%
+								RDMOPT_ATTR_TOLERACE_WIND,		// Wind  Resistance	3% ~ 5%
+								RDMOPT_DEC_SP_CONSUMPTION,		// Decreases SP consumption	3% ~ 5%
+								RDMOPT_VAR_ATKPERCENT,			// Attack 1% ~ 3%
+								RDMOPT_VAR_MAGICATKPERCENT,		// Magic Attack 1% ~ 3%
+								RDMOPT_RANGE_ATTACK_DAMAGE_TARGET,
+								RDMOPT_DEC_SPELL_DELAY_TIME,
+								RDMOPT_VAR_AVOIDSUCCESSVALUE,
+								RDMOPT_VAR_PLUSAVOIDSUCCESSVALUE,
+								RDMOPT_VAR_HITSUCCESSVALUE,
+								RDMOPT_BODY_INDESTRUCTIBLE,
+								RDMOPT_BODY_INDESTRUCTIBLE,
+								RDMOPT_BODY_INDESTRUCTIBLE; 
+		
+setarray .RandOpt3_Armor_minV[0],1,1,1,1,1,1,3,3,3,5,5,3,3,3,3,5,1,1,1,3,5,3,5,0,0,0;
+setarray .RandOpt3_Armor_maxV[0],10,10,10,10,10,10,5,5,10,10,10,5,5,5,5,10,5,5,5,5,10,5,10,0,0,0; 
+
+setarray .RandOpt4_Armor[0],RDMOPT_VAR_STRAMOUNT, 			// str 1 ~ 4
+							RDMOPT_VAR_AGIAMOUNT,			// agi 1 ~ 4
+							RDMOPT_VAR_VITAMOUNT,			// vit 1 ~ 4
+							RDMOPT_VAR_INTAMOUNT,			// int 1 ~ 4
+							RDMOPT_VAR_DEXAMOUNT,			// dex 1 ~ 4
+							RDMOPT_VAR_LUKAMOUNT,			// luk 1 ~ 4
+							RDMOPT_VAR_MAXHPPERCENT,		// MAX HP 3% ~ 5%
+							RDMOPT_VAR_MAXSPPERCENT,		// MAX SP 3% ~ 5%
+								RDMOPT_VAR_PLUSASPDPERCENT,		// ASPD 3% ~ 5%
+								RDMOPT_DEC_SPELL_CAST_TIME,		// Variable Cast Reduction	5% ~ 7%
+								RDMOPT_DAMAGE_CRI_TARGET,		// Critical Damage	5% ~ 8%
+								RDMOPT_DEC_SP_CONSUMPTION,		// Decreases SP consumption	3% ~ 5%
+								RDMOPT_VAR_ATKPERCENT,			// Attack 1% ~ 3%
+								RDMOPT_VAR_MAGICATKPERCENT,		// Magic Attack 1% ~ 3%
+								RDMOPT_RANGE_ATTACK_DAMAGE_TARGET,
+								RDMOPT_DEC_SPELL_DELAY_TIME,
+								RDMOPT_VAR_HITSUCCESSVALUE,
+								RDMOPT_WEAPON_INDESTRUCTIBLE,
+								RDMOPT_CLASS_DAMAGE_BOSS_TARGET,
+								RDMOPT_CLASS_MDAMAGE_BOSS,
+								RDMOPT_DAMAGE_SIZE_SMALL_TARGET;
+		
+setarray .RandOpt4_Armor_minV[0],1,1,1,1,1,1,3,3,3,5,5,5,1,1,1,3,5,0,10,10,10;
+setarray .RandOpt4_Armor_maxV[0],10,10,10,10,10,10,5,5,10,10,10,10,5,5,5,5,10,0,50,50,50;
+
+setarray .RandOpt5_Armor[0],RDMOPT_VAR_STRAMOUNT, 			// str 1 ~ 4
+							RDMOPT_VAR_AGIAMOUNT,			// agi 1 ~ 4
+							RDMOPT_VAR_VITAMOUNT,			// vit 1 ~ 4
+							RDMOPT_VAR_INTAMOUNT,			// int 1 ~ 4
+							RDMOPT_VAR_DEXAMOUNT,			// dex 1 ~ 4
+							RDMOPT_VAR_LUKAMOUNT,			// luk 1 ~ 4
+							RDMOPT_VAR_MAXHPPERCENT,		// MAX HP 3% ~ 5%
+							RDMOPT_VAR_MAXSPPERCENT,		// MAX SP 3% ~ 5%
+								RDMOPT_VAR_PLUSASPDPERCENT,		// ASPD 3% ~ 5%
+								RDMOPT_DEC_SPELL_CAST_TIME,		// Variable Cast Reduction	5% ~ 7%
+								RDMOPT_DAMAGE_CRI_TARGET,		// Critical Damage	5% ~ 8%
+								RDMOPT_DEC_SP_CONSUMPTION,		// Decreases SP consumption	3% ~ 5%
+								RDMOPT_VAR_ATKPERCENT,			// Attack 1% ~ 3%
+								RDMOPT_VAR_MAGICATKPERCENT,		// Magic Attack 1% ~ 3%
+								RDMOPT_RANGE_ATTACK_DAMAGE_TARGET,
+								RDMOPT_DEC_SPELL_DELAY_TIME,
+								RDMOPT_VAR_HITSUCCESSVALUE,
+								RDMOPT_WEAPON_ATTR_WATER,
+RDMOPT_WEAPON_ATTR_GROUND,
+RDMOPT_WEAPON_ATTR_FIRE,
+RDMOPT_WEAPON_ATTR_WIND,
+RDMOPT_WEAPON_ATTR_POISON,
+RDMOPT_WEAPON_ATTR_SAINT,
+RDMOPT_WEAPON_ATTR_DARKNESS,
+RDMOPT_WEAPON_ATTR_TELEKINESIS,
+RDMOPT_WEAPON_ATTR_UNDEAD,
+								RDMOPT_CLASS_DAMAGE_BOSS_TARGET,
+								RDMOPT_CLASS_MDAMAGE_BOSS,
+								RDMOPT_DAMAGE_SIZE_SMALL_TARGET;
+
+		
+setarray .RandOpt5_Armor_minV[0],1,1,1,1,1,1,3,3,3,5,5,5,1,1,1,3,5,0,0,0,0,0,0,0,0,0,10,10,10; 
+setarray .RandOpt5_Armor_maxV[0],10,10,10,10,10,10,5,5,10,10,10,10,5,5,5,5,10,0,0,0,0,0,0,0,0,0,50,50,50; 
+
+setarray .RandOpt6_Armor[0],RDMOPT_VAR_STRAMOUNT, 			// str 1 ~ 4
+							RDMOPT_VAR_AGIAMOUNT,			// agi 1 ~ 4
+							RDMOPT_VAR_VITAMOUNT,			// vit 1 ~ 4
+							RDMOPT_VAR_INTAMOUNT,			// int 1 ~ 4
+							RDMOPT_VAR_DEXAMOUNT,			// dex 1 ~ 4
+							RDMOPT_VAR_LUKAMOUNT,			// luk 1 ~ 4
+							RDMOPT_VAR_MAXHPPERCENT,		// MAX HP 3% ~ 5%
+							RDMOPT_VAR_MAXSPPERCENT,		// MAX SP 3% ~ 5%
+								RDMOPT_VAR_PLUSASPDPERCENT,		// ASPD 3% ~ 5%
+								RDMOPT_DEC_SPELL_CAST_TIME,		// Variable Cast Reduction	5% ~ 7%
+								RDMOPT_DAMAGE_CRI_TARGET,		// Critical Damage	5% ~ 8%
+								RDMOPT_DEC_SP_CONSUMPTION,		// Decreases SP consumption	3% ~ 5%
+								RDMOPT_VAR_ATKPERCENT,			// Attack 1% ~ 3%
+								RDMOPT_VAR_MAGICATKPERCENT,		// Magic Attack 1% ~ 3%
+								RDMOPT_RANGE_ATTACK_DAMAGE_TARGET,
+								RDMOPT_DEC_SPELL_DELAY_TIME,
+								RDMOPT_VAR_HITSUCCESSVALUE;
+setarray .RandOpt6_Armor_minV[0],1,1,1,1,1,1,3,3,3,5,5,5,1,1,1,3,5;
+setarray .RandOpt6_Armor_maxV[0],10,10,10,10,10,10,5,5,10,10,10,10,5,5,5,5,10;  
+
+  
+end; 
+}

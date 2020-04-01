@@ -1,0 +1,9 @@
+-	script	remove_assumptio	-1,{
+OnPCLoadMapEvent:
+	if (getmapflag(strcharinfo(3),mf_gvg))
+		sc_end SC_ASSUMPTIO;
+		sc_end SC_SKE;
+
+	end;
+}
+

@@ -1,0 +1,94 @@
+-	script	LOGIN	-1,{
+OnWhisperGlobal:
+OnLoginCmnd:
+cutin .Pic$[#xyz],4;
+goto check_reward;
+end;
+OnPCLoginEvent:
+check_reward:
+.@charid = getcharid(0);
+if(#dailyrewards > gettimetick(2)){
+dispbottom "Time left for daily reward: " + callfunc("Time2Str",#dailyrewards);
+end;
+} 
+cutin .Pic$[#xyz],4;
+mes "Do You want to claim your reward?";
+sleep2 500;
+switch(select("Yes:NO")){
+case 1:
+set #xyz,#xyz + 1;
+.@itemid = .dwards[#xyz];
+.@itemamount =  .dwardscount[#xyz];
+if(#xyz <=28){
+mail .@charid,"Daily Rewards","Your Day "+#xyz+" Reward","Congratulations! Here is your day "+#xyz+" Reward!",0, .@itemid, .@itemamount;
+}
+//getitem .dwards[#xyz], .dwardscount[#xyz];
+if(#xyz >= 29){
+set #xyz, 0;
+cutin .Pic$[#xyz],4;
+sleep2 1000;
+set #xyz,#xyz + 1;
+.@itemid = .dwards[#xyz];
+.@itemamount =  .dwardscount[#xyz];
+mail .@charid,"Daily Rewards","Your Day "+#xyz+" Reward","Congratulations! Here is your day "+#xyz+" Reward!",0, .@itemid, .@itemamount;
+//getitem .dwards[#xyz], .dwardscount[#xyz];
+cutin .Pic$[#xyz],4;
+set #dailyrewards, gettimetick(2) + 86399;
+end; 
+}
+cutin .Pic$[#xyz],4;
+set #dailyrewards, gettimetick(2) + 86399;
+end; 
+case 2:
+end;
+}
+
+
+
+OnInit:
+	.@sender$ = "Daily Rewards";
+	.@title$ = "Your Daily Reward";
+	.@body$ = "Congratulations! Here is your Daily Reward!";
+	.@zeny = 0;
+bindatcmd("daily"	,"LOGIN::OnLoginCmnd",0,99);
+
+setarray .dwards,0,60001,60002,12210,12214,608,607,60003,
+				60001,60002,12210,12214,608,607,41037,
+				7619,7620,12103,41037,60003,60000,7776,
+				6241,6240,12412,41037,60003,7776,59999;
+
+setarray .dwardscount,0,2,2,2,10,100,100,1,3,3,3,15,100,100,1,5,5,10,1,1,10,5,2,2,5,1,1,5,1;
+ 
+setarray .Pic$,
+"Daily_00", //pic with day0 highlighted
+"Daily_01", //pic with day1 highlighted
+"Daily_02", //pic with day2 highlighted
+"Daily_03", //pic with day3 highlighted
+"Daily_04", //pic with day4 highlighted
+"Daily_05", //pic with day5 highlighted
+"Daily_06", //pic with day6 highlighted
+"Daily_07", //pic with day7 highlighted
+"Daily_08", //pic with day8 highlighted
+"Daily_09", //pic with day9 highlighted
+"Daily_10", //pic with day10 highlighted
+"Daily_11", //pic with day11 highlighted
+"Daily_12", //pic with day12 highlighted
+"Daily_13", //pic with day13 highlighted
+"Daily_14", //pic with day14 highlighted
+"Daily_15", //pic with day15 highlighted
+"Daily_16", //pic with day16 highlighted
+"Daily_17", //pic with day17 highlighted
+"Daily_18", //pic with day18 highlighted
+"Daily_19", //pic with day19 highlighted
+"Daily_20", //pic with day20 highlighted
+"Daily_21", //pic with day21 highlighted
+"Daily_22", //pic with day22 highlighted
+"Daily_23", //pic with day23 highlighted
+"Daily_24", //pic with day24 highlighted
+"Daily_25", //pic with day25 highlighted
+"Daily_26", //pic with day26 highlighted
+"Daily_27", //pic with day27 highlighted
+"Daily_28"; //pic with day28 highlighted
+ 
+end;
+}

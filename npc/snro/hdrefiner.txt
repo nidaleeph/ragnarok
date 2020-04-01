@@ -1,0 +1,170 @@
+//===== rAthena Script ======================================= 
+//= HD Refiners
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Refiners that use HD ores to refine equipment. Upon
+//= failure, the equipment is not destroyed; rather, its
+//= refine level decreases by 1. The success rate is identical
+//= to that for Enriched ores.
+//= - "Blacksmith Mighty Hammer" only refines from +7~9.
+//= - "Basta" only refines from +10 and up.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Euphy]
+//============================================================
+
+// Blacksmith Mighty Hammer (+7~9)
+//============================================================
+-	script	::SNROMightyHammer	-1,{
+	disable_items;
+	mes "[Blacksmith Mighty Hammer]";
+	mes "Unlike others, I am a blacksmith who refines a very limited number of items.";
+	mes "I refine only items that are ^CC0000+7 to +9^000000.";
+	next;
+	mes "[Blacksmith Mighty Hammer]";
+	mes "My specialty is that even if my refining fails, the refine level decreases by 1 without losing the gear. Isn't it great?";
+	next;
+	mes "[Blacksmith Mighty Hammer]";
+	mes "So lets kick this into overdrive, what d' ya say? What item do you want to refine?";
+	next;
+
+
+
+	setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
+	for(set .@i,1; .@i<=10; set .@i,.@i+1) {
+		if (getequipisequiped(.@indices[.@i])) {
+			set .@menu$, .@menu$ + F_getpositionname(.@indices[.@i]) + "-[" + getequipname(.@indices[.@i]) + "]";
+			set .@equipped,1;
+		}
+		set .@menu$, .@menu$ + ":";
+	}
+	if (.@equipped == 0) {
+		mes "[ Enriched Refiner ]";
+		mes "I don't think I can refine any items you have...";
+		close;
+	}
+	set .@part, .@indices[ select(.@menu$) ];
+
+
+	if (!getequipisequiped(.@part)) {
+		mes "[Blacksmith Mighty Hammer]";
+		switch(.@part) {
+		case 1:
+			mes "I'm a blacksmith, not a hairstylist.";
+			break;
+		case 2:
+			mes "With my hammer, I will make you a star of the sky.";
+			break;
+		case 3:
+		case 4:
+			mes "Making artificial hands is not my specialty.";
+			break;
+		case 5:
+			mes "Bring out the item so I can refine it!";
+			break;
+		case 6:
+			mes "Where is this foot odor coming from?";
+			break;
+		case 7:
+		case 8:
+			mes "Where is the accessory?";
+			break;
+		case 9:
+			mes "What do you want me to refine?";
+			break;
+		case 10:
+			mes "Huh? What do you want me to do?";
+			break;
+		}
+		close;
+	}
+	if (!getequipisenableref(.@part)) {
+		mes "[Blacksmith Mighty Hammer]";
+		mes "This item can't be refined.";
+		close;
+	}
+	if (getequiprefinerycnt(.@part) < 7 || getequiprefinerycnt(.@part) > 9) {
+		mes "[Blacksmith Mighty Hammer]";
+		mes "I only handle items with refine levels from +7 to +9.";
+		close;
+	}
+	switch(getequipweaponlv(.@part)) {
+	default:
+	case 0:
+		set .@price,20000;
+		set .@material,6241; //HD_Elunium
+		break;
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+		set .@price,20000;
+		set .@material,6240; //HD_Oridecon
+		break;
+	}
+	mes "[Blacksmith Mighty Hammer]";
+	mes "In order to refine the gear you selected you need ^ff9999"+getitemname(.@material)+"^000000 and 20,000 zeny as a fee.";
+	mes "Do you have them ready?";
+	next;
+	if(select("Yes:No") == 2) {
+		mes "[Blacksmith Mighty Hammer]";
+		mes "I will wait until you are ready.";
+		close;
+	}
+	if (getequippercentrefinery(.@part) < 100) {
+		mes "[Blacksmith Mighty Hammer]";
+		mes "It looks like this item will likely fail to be refined.";
+		mes "Well, even if it fails, it only decreases by 1 refine level.";
+		mes "Would you like to continue refining?";
+		next;
+		if(select("Yes:No") == 2) {
+			mes "[Blacksmith Mighty Hammer]";
+			mes "Only those who overcome fear of failure will obtain a masterpiece.";
+			close;
+		}
+	}
+	if (countitem(.@material) == 0 || Zeny < .@price) {
+		mes "[Blacksmith Mighty Hammer]";
+		mes "Didn't you just say you had everything ready?";
+		close;
+	}
+	delitem .@material,1;
+	set Zeny, Zeny-.@price;
+	mes "[Blacksmith Mighty Hammer]";
+	mes "Tac! Tac! Tac!";
+	if (getequippercentrefinery(.@part) > rand(100) || getequippercentrefinery(.@part) > rand(100)) {
+		successrefitem .@part;
+		next;
+		emotion ET_BEST;
+		mes "[Blacksmith Mighty Hammer]";
+		mes "The sound refreshes my mind everytime I hear it.";
+		mes "Here, have it. Refine succeeded flawlessly!";
+		close;
+	}
+	downrefitem .@part;
+	next;
+	emotion ET_HUK;
+	mes "[Blacksmith Mighty Hammer]";
+	mes "Oops!!";
+	next;
+	mes "[Blacksmith Mighty Hammer]";
+	mes "I am sure a person like you would never blame me for a decrease in refine level by 1. Hmm.";
+	close;
+}
+//prt_in,59,54,3	duplicate(SNROMightyHammer)	Mighty Hammer#prt	10127
+//morocc_in,65,30,3	duplicate(SNROMightyHammer)	Mighty Hammer#morocc	10127
+//payon,148,176,3	duplicate(SNROMightyHammer)	Mighty Hammer#pay	10127
+//alberta_in,16,56,3	duplicate(SNROMightyHammer)	Mighty Hammer#alb	10127
+//yuno_in01,171,18,3	duplicate(SNROMightyHammer)	Mighty Hammer#yuno	10127
+//ein_in01,22,82,3	duplicate(SNROMightyHammer)	Mighty Hammer#ein	10127
+//lhz_in02,280,19,3	duplicate(SNROMightyHammer)	Mighty Hammer#lhz	10127
+//prontera,118,168,5	duplicate(SNROMightyHammer)	Mighty Hammer#trin	10127
+
+// iRO NPC locations:
+// payon,174,133,4	duplicate(SNROMightyHammer)	Mighty Hammer#im	826
+//1@ghvy,140,37,4	duplicate(SNROMightyHammer)	HD Refiner#ghvy	10127

@@ -1,0 +1,153 @@
+//===== rAthena Script =======================================
+//= Healer
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Basic healer script.
+//===== Additional Comments: =================================
+//= 1.0 Initial script.
+//= 1.1 Aligned coordinates with @go.
+//============================================================
+
+-	script	Healer	-1,{
+
+	.@Price = 0;	// Zeny required for heal
+	.@Buffs = 1;	// Also buff players? (1: yes / 0: no)
+	.@Delay = 1;	// Heal delay, in seconds
+
+	if (@HD > gettimetick(2))
+		end;
+	if (.@Price) {
+		message strcharinfo(0), "Healing costs " + callfunc("F_InsertComma",.@Price) + " Zeny.";
+		if (Zeny < .@Price)
+			end;
+		if (select("^0055FFHeal^000000:^777777Cancel^000000") == 2)
+			end;
+		Zeny -= .@Price;
+	}
+	specialeffect2 EF_HEAL2;
+	percentheal 100,100;
+	atcommand "@identifyall";
+	atcommand "@repairall";
+
+		if (.@Buffs) {
+		
+		specialeffect2 EF_INCAGILITY;
+		sc_start SC_INCREASEAGI,240000,10;
+		specialeffect2 EF_BLESSING;
+		sc_start SC_BLESSING,240000,10;
+		//soundeffect "goo.wav",0;
+
+
+	}
+	
+	if (Zeny < 1000000){
+	#paidheal = 0;
+	}
+	
+	if(#paidheal == 1 && Zeny >= 1000000) {
+	set Zeny, Zeny - 1000000;
+	specialeffect2 EF_HEAL2; percentheal 100,100;
+	specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,600000,10;
+	specialeffect2 EF_BLESSING; sc_start SC_BLESSING,600000,10;
+	specialeffect2 EF_CHEMICALPROTECTIOn; sc_start SC_CP_WEAPON,600000,5;
+	sc_start SC_CP_ARMOR,600000,5;
+	sc_start SC_CP_SHIELD,600000,5;
+	sc_start SC_CP_HELM,600000,5;
+	skilleffect 383,0; sc_start SC_WINDWALK,360000,5;
+	skilleffect 74,0; sc_start SC_MAGNIFICAT,360000,5;
+	skilleffect 75,0; sc_start SC_GLORIA,360000,5;
+	skilleffect 66,0; sc_start SC_IMPOSITIO,360000,5;
+	skilleffect 67,0; sc_start SC_SUFFRAGIUM,360000,3;
+	skilleffect 34,0; sc_start SC_BLESSING,360000,10;
+	skilleffect 29,0; sc_start SC_INCREASEAGI,360000,10;
+	skilleffect 112,0; sc_start SC_WEAPONPERFECTION,360000,10;
+	sc_start SC_CP_ARMOR,600000,5;
+	sc_start SC_CP_SHIELD,600000,5;
+	sc_start SC_CP_HELM,600000,5;
+	dispbottom "You're using paid healer. 1m zeny will be deducted for every use";
+
+switch ( basejob ) {
+		
+	  case Job_Alchemist:	set .@spirit, 445; break;
+	  case Job_Monk:	 set .@spirit, 447; break;
+	  case Job_Star_Gladiator:  set .@spirit, 448; break;
+	  case Job_Sage:	 set .@spirit, 449; break;
+	  case Job_Crusader:	set .@spirit, 450; break;
+	  case Job_SuperNovice:   set .@spirit, 451; break;
+	  case Job_Knight:	set .@spirit, 452; break;
+	  case Job_Wizard:	set .@spirit, 453; break;
+	  case Job_Priest:	set .@spirit, 454; break;
+	  case Job_Bard: case Job_Dancer: set .@spirit, 455; break;
+	  case Job_Rogue:	 set .@spirit, 456; break;
+	  case Job_Assassin:	set .@spirit, 457; break;
+	  case Job_Blacksmith:   set .@spirit, 458; break;
+	  case Job_Hunter:	set .@spirit, 460; break;
+	  case Job_Soul_Linker:   set .@spirit, 461; break;
+	  default:
+	   if ( upper == 1 && baselevel < 70 )
+		set .@spirit, 494;
+	}
+	if ( .@spirit ) {
+		sc_start4 sc_spirit, 360000, 5, .@spirit,0,0;
+		skilleffect .@spirit, 5;
+	}
+	}
+	
+	if (.@Delay)
+	@HD = gettimetick(2) + .@Delay;
+	end;
+	
+	OnInit:
+	bindatcmd "paidheal", strnpcinfo(0)+"::OnPaidHeal", 0,99;
+	end;
+OnPaidHeal:
+	if ( compare( .@atcmd_parameters$, "on" ) ){ 
+	#paidheal = 1;
+	dispbottom "You're using paid healer. 1m zeny will be deducted for every use";
+	}
+	else if ( compare( .@atcmd_parameters$, "off" ) ) { 
+	#paidheal = 0;
+	dispbottom "Paid heal is now off";}
+	else {
+		dispbottom "type - '@paidheal on' to use advanced buffer";
+		dispbottom "type - '@paidheal off' to off advanced buffer";
+	}
+	end;
+	
+}
+
+
+// Duplicates
+//============================================================
+//splendide,194,155,5	duplicate(Healer)	Healer#1	10173
+prontera,156,194,4	duplicate(Healer)	Healer#2	10173
+//morocc,149,96,5	duplicate(Healer)	Healer#3	10173
+geffen,41,104,5	duplicate(Healer)	Healer#4	10173
+payon,148,223,5	duplicate(Healer)	Healer#5	10173
+//alberta,134,171,5	duplicate(Healer)	Healer#6	10173
+izlude,120,144,5	duplicate(Healer)	Healer#7	10173
+aldebaran,134,116,5	duplicate(Healer)	Healer#8	10173
+xmas,143,119,5	duplicate(Healer)	Healer#9	10173
+comodo,59,250,5	duplicate(Healer)	Healer#10	10173
+yuno,152,169,5	duplicate(Healer)	Healer#11	10173
+amatsu,106,149,5	duplicate(Healer)	Healer#12	10173
+gonryun,152,114,5	duplicate(Healer)	Healer#13	10173
+umbala,117,145,5	duplicate(Healer)	Healer#14	10173
+louyang,211,112,5	duplicate(Healer)	Healer#15	10173
+jawaii,244,127,5	duplicate(Healer)	Healer#16	10173
+ayothaya,145,164,5	duplicate(Healer)	Healer#17	10173
+lighthalzen,153,94,5	duplicate(Healer)	Healer#18	10173
+hugel,91,143,5	duplicate(Healer)	Healer#19	10173
+rachel,120,110,5	duplicate(Healer)	Healer#20	10173
+//skycity,142,261,5	duplicate(Healer)	Healer#21	10173
+alberta,192,151,5	duplicate(Healer)	Healer#22	10173
+louyang,94,260,4	duplicate(Healer)	Healer#23	811
+1@ghvy,139,94,4	duplicate(Healer)	Healer#24	10110
+
+
+

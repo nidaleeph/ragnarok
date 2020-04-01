@@ -1,0 +1,210 @@
+
+-	script	gbwar	-1,{
+
+OnAgitEnd:
+OnAgitEnd2:
+OnAgitEnd3:
+$gbwgid = $gbwgid1;
+ 	announce "The Guild Conqueror is the ["+ getguildname($gbwgid) +"] guild.", bc_all;
+ 	announce "They Can now enter the Valhala Ruins.", bc_all;
+end; 
+}
+
+//------------------------------------------------------------------------------------------
+
+1@ghvy,45,91,4	script	GBvalhala#vh	45,2,2,{
+end;
+OnTouch:
+if(getcharid(2) != $gbwgid){
+mes "Only The Latest Agit Holder Has the right to enter Valhala Ruins";
+close;
+end;
+}
+	.register_num = 5; // How many party members are required?
+	
+	getpartymember getcharid(1), 1;
+	getpartymember getcharid(1), 2;
+
+	if ( $@partymembercount < .register_num ) {
+		mes "Please form a party with atleast " + .register_num + " members to continue";
+		close;
+	}
+	for ( .@i = 0; .@i < $@partymembercount; .@i++ )
+		if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) )
+			.@count_online++;
+			
+	if ( .@count_online < $@partymembercount ) {
+		mes "All your party members must be online to continue";
+		close;
+	}
+	
+	copyarray .@partymembercid, $@partymembercid, .register_num;
+
+	mes "Are you ready ?";
+	next; // careful here
+	select("Yes");
+
+	getpartymember getcharid(1), 1;
+	if ( $@partymembercount < .register_num ) {
+		mes "You've made changes to your party !";
+		close;
+	}
+	for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
+		if ( .@partymembercid[.@i] != $@partymembercid[.@i] ) {
+			mes "You've made changes to your party !";
+			close;
+		}
+	}
+	warpparty "1@ghvy", 0,0, getcharid(1);
+ }
+
+
+//-------------------------------------------------------------------------------------------------------------------
+
+1@ghvy,51,91,4	script	GBvalhala#vh1	45,2,2,{
+end;
+OnTouch:
+if(getcharid(2) != $gbwgid){
+mes "Only The Latest Agit Holder Has the right to enter Valhala Ruins";
+close;
+end;
+}
+	.register_num = 5; // How many party members are required?
+	
+	getpartymember getcharid(1), 1;
+	getpartymember getcharid(1), 2;
+
+	if ( $@partymembercount < .register_num ) {
+		mes "Please form a party with atleast " + .register_num + " members to continue";
+		close;
+	}
+	for ( .@i = 0; .@i < $@partymembercount; .@i++ )
+		if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) )
+			.@count_online++;
+			
+	if ( .@count_online < $@partymembercount ) {
+		mes "All your party members must be online to continue";
+		close;
+	}
+	
+	copyarray .@partymembercid, $@partymembercid, .register_num;
+
+	mes "Are you ready ?";
+	next; // careful here
+	select("Yes");
+
+	getpartymember getcharid(1), 1;
+	if ( $@partymembercount < .register_num ) {
+		mes "You've made changes to your party !";
+		close;
+	}
+	for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
+		if ( .@partymembercid[.@i] != $@partymembercid[.@i] ) {
+			mes "You've made changes to your party !";
+			close;
+		}
+	}
+	warpparty "1@ghvy", 0,0, getcharid(1);
+ }
+
+
+//-------------------------------------------------------------------------------------------------------------------
+
+1@ghvy,57,91,4	script	GBvalhala#vh2	45,2,2,{
+end;
+OnTouch:
+if(getcharid(2) != $gbwgid){
+mes "Only The Latest Agit Holder Has the right to enter Valhala Ruins";
+close;
+end;
+}
+	.register_num = 5; // How many party members are required?
+	
+	getpartymember getcharid(1), 1;
+	getpartymember getcharid(1), 2;
+
+	if ( $@partymembercount < .register_num ) {
+		mes "Please form a party with atleast " + .register_num + " members to continue";
+		close;
+	}
+	for ( .@i = 0; .@i < $@partymembercount; .@i++ )
+		if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) )
+			.@count_online++;
+			
+	if ( .@count_online < $@partymembercount ) {
+		mes "All your party members must be online to continue";
+		close;
+	}
+	
+	copyarray .@partymembercid, $@partymembercid, .register_num;
+
+	mes "Are you ready ?";
+	next; // careful here
+	select("Yes");
+
+	getpartymember getcharid(1), 1;
+	if ( $@partymembercount < .register_num ) {
+		mes "You've made changes to your party !";
+		close;
+	}
+	for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
+		if ( .@partymembercid[.@i] != $@partymembercid[.@i] ) {
+			mes "You've made changes to your party !";
+			close;
+		}
+	}
+	warpparty "1@ghvy", 0,0, getcharid(1);
+ }
+
+
+//-------------------------------------------------------------------------------------------------------------------
+
+
+1@ghvy,62,91,4	script	GBvalhala#vh3	45,2,2,{
+end;
+OnTouch:
+if(getcharid(2) != $gbwgid){
+mes	 "Only The Latest Agit Holder Has the right to enter Valhala Ruins";
+close;
+end;
+}
+	.register_num = 5; // How many party members are required?
+	
+	getpartymember getcharid(1), 1;
+	getpartymember getcharid(1), 2;
+
+	if ( $@partymembercount < .register_num ) {
+		mes "Please form a party with atleast " + .register_num + " members to continue";
+		close;
+	}
+	for ( .@i = 0; .@i < $@partymembercount; .@i++ )
+		if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) )
+			.@count_online++;
+			
+	if ( .@count_online < $@partymembercount ) {
+		mes "All your party members must be online to continue";
+		close;
+	}
+	
+	copyarray .@partymembercid, $@partymembercid, .register_num;
+
+	mes "Are you ready ?";
+	next; // careful here
+	select("Yes");
+
+	getpartymember getcharid(1), 1;
+	if ( $@partymembercount < .register_num ) {
+		mes "You've made changes to your party !";
+		close;
+	}
+	for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
+		if ( .@partymembercid[.@i] != $@partymembercid[.@i] ) {
+			mes "You've made changes to your party !";
+			close;
+		}
+	}
+	warpparty "1@ghvy", 0,0, getcharid(1);
+ }
+
+
+//-------------------------------------------------------------------------------------------------------------------

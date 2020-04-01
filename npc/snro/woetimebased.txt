@@ -1,0 +1,407 @@
+//SCRIPT BY JONATHAN RIVERA  
+ 
+-	script	woetimereward	-1,{
+OnInit: 
+	bindatcmd "woep", strnpcinfo(0)+"::OnCommand", 99,100;
+	end;
+OnCommand:
+	if ( compare( .@atcmd_parameters$, "on" ) ) {
+set $@tbwoe,1;
+dispbottom "tbwoe = "+$@tbwoe+"";
+end;
+}
+	else {
+		dispbottom "type - '@woep on' to start the event";
+	}
+	end;  
+
+OnClock2100: 
+OnAgitStart: 
+OnAgitStart2:
+OnAgitStart3:
+set $@tbwoe,1; 
+end;
+OnClock2200: 
+OnAgitEnd: 
+OnAgitEnd2:
+OnAgitEnd3:
+set $@tbwoe,0; 
+end;
+
+ 
+OnPCLoadMapEvent: 
+//attachnpctimer ""+strcharinfo(0)+""; 
+  
+
+setarray .woeCastles$[0],   
+		"prtg_cas01","prtg_cas02","prtg_cas03","prtg_cas04","prtg_cas05", 
+		"payg_cas01","payg_cas02","payg_cas03","payg_cas04","payg_cas05",
+		"gefg_cas01","gefg_cas02","gefg_cas03","gefg_cas04","gefg_cas05",
+		"aldeg_cas01","aldeg_cas02","aldeg_cas03","aldeg_cas04","aldeg_cas05",
+		"arug_cas01","arug_cas02","arug_cas03","arug_cas04","arug_cas05",
+		"schg_cas01","schg_cas02","schg_cas03","schg_cas04","schg_cas05";
+
+for (.@a = 0; .@a < getarraysize(.woeCastles$); .@a++) {  
+setmapflag .woeCastles$[.@a], mf_loadevent;  
+//if ( strcharinfo(3) == .woeCastles$[.@a] && $@tbwoe == 1) {  	 
+if ( (strcharinfo(3) == "arug_cas01" || strcharinfo(3) == "arug_cas02" || strcharinfo(3) == "arug_cas03" || strcharinfo(3) ==  "arug_cas04" || strcharinfo(3) == "arug_cas05" ||
+strcharinfo(3) == "prtg_cas01" || strcharinfo(3) == "prtg_cas02" || strcharinfo(3) == "prtg_cas03" || strcharinfo(3) ==  "prtg_cas04" || strcharinfo(3) == "prtg_cas05" ||
+strcharinfo(3) == "payg_cas01" || strcharinfo(3) == "payg_cas02" || strcharinfo(3) == "payg_cas03" || strcharinfo(3) ==  "payg_cas04" || strcharinfo(3) == "payg_cas05" ||
+strcharinfo(3) == "gefg_cas01" || strcharinfo(3) == "gefg_cas02" || strcharinfo(3) == "gefg_cas03" || strcharinfo(3) ==  "gefg_cas04" || strcharinfo(3) == "gefg_cas05" ||
+strcharinfo(3) == "aldeg_cas01" || strcharinfo(3) == "aldeg_cas02" || strcharinfo(3) == "aldeg_cas03" || strcharinfo(3) ==  "aldeg_cas04" || strcharinfo(3) == "aldeg_cas05" ||
+strcharinfo(3) == "schg_cas01" || strcharinfo(3) == "schg_cas02" || strcharinfo(3) == "schg_cas03" || strcharinfo(3) ==  "schg_cas04" || strcharinfo(3) == "schg_cas05") 
+&& $@tbwoe == 1) { 	
+if (@checkin == 1){
+end;
+}   		
+dispbottom "Woe Participation Timer Start";
+set @checkin,1;
+}  
+else if ($@tbwoe == 1){
+dispbottom "You leave the castle. Woe Timer Stop";
+set @checkin,0;
+end;
+} 
+else {
+set @checkin,0;
+end;
+} 
+for (.@wt = 0; .@wt <= 60; .@wt++){  		 
+//if ( strcharinfo(3) == .woeCastles$[.@a] && $@tbwoe == 1) { 	
+if ( (strcharinfo(3) == "arug_cas01" || strcharinfo(3) == "arug_cas02" || strcharinfo(3) == "arug_cas03" || strcharinfo(3) ==  "arug_cas04" || strcharinfo(3) == "arug_cas05" ||
+strcharinfo(3) == "prtg_cas01" || strcharinfo(3) == "prtg_cas02" || strcharinfo(3) == "prtg_cas03" || strcharinfo(3) ==  "prtg_cas04" || strcharinfo(3) == "prtg_cas05" ||
+strcharinfo(3) == "payg_cas01" || strcharinfo(3) == "payg_cas02" || strcharinfo(3) == "payg_cas03" || strcharinfo(3) ==  "payg_cas04" || strcharinfo(3) == "payg_cas05" ||
+strcharinfo(3) == "gefg_cas01" || strcharinfo(3) == "gefg_cas02" || strcharinfo(3) == "gefg_cas03" || strcharinfo(3) ==  "gefg_cas04" || strcharinfo(3) == "gefg_cas05" ||
+strcharinfo(3) == "aldeg_cas01" || strcharinfo(3) == "aldeg_cas02" || strcharinfo(3) == "aldeg_cas03" || strcharinfo(3) ==  "aldeg_cas04" || strcharinfo(3) == "aldeg_cas05" ||
+strcharinfo(3) == "schg_cas01" || strcharinfo(3) == "schg_cas02" || strcharinfo(3) == "schg_cas03" || strcharinfo(3) ==  "schg_cas04" || strcharinfo(3) == "schg_cas05") 
+&& $@tbwoe == 1) { 	 	 	
+set @secwoe, @secwoe + 1; 
+sleep2 1000;
+if(@secwoe == 10){
+dispbottom "Woe Participation Timer: "+@secwoe+" seconds.";
+}
+
+if(@secwoe == 20){
+dispbottom "Woe Participation Timer: "+@secwoe+" seconds.";
+}
+
+if(@secwoe == 30){
+dispbottom "Woe Participation Timer: "+@secwoe+" seconds.";
+}
+
+if(@secwoe == 40){
+dispbottom "Woe Participation Timer: "+@secwoe+" seconds.";
+}
+
+if(@secwoe == 50){ 
+dispbottom "Woe Participation Timer: "+@secwoe+" seconds.";
+}
+ 
+if(@secwoe >= 60){ 
+set ##woetotalpointreward, ##woetotalpointreward + 1;
+dispbottom "You received 1 point for participating in woe for 1 minute.";
+dispbottom "Your total point now is: "+##woetotalpointreward+" point(s)";
+set @secwoe, 0; 
+set .@wt, 0;
+}}}}
+end;
+}
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+/*egg1,234,230,4	script	Time Based Woe Reward	4_GEFFEN_08,{
+if(getgmlevel()>=99){
+mes "Hi Admin!";
+mes "Do you want to edit your points?";
+next;
+switch(select("YES:NO")){
+case 1:
+mes "please add the points you want";
+input @wpts; 
+set ##woetotalpointreward, ##woetotalpointreward + @wpts;
+next;
+break;
+
+case 2:
+mes "Ok please proceed";
+next;
+break;
+}
+
+}
+mes "Your Total Woe Point is ^ff0000"+##woetotalpointreward+"^000000";
+next;
+mes "I can exchange you point for materials in game";
+next;
+mes "Do you want to exchange your points for materials";
+switch(select("Yes:NO")){ 
+case 1: 
+switch(select("Woe Badge ^ff0000(1)^000000:Pods ^ff0000(1)^000000:20 Exodus Tcg ^ff0000(1)^000000:Castle Treasure Box ^ff0000(15)^000000:100 Ygg Seed Box ^ff0000(1)^000000:Enchanted Crystal ^ff0000(5)^000000:Artist Token ^ff0000(10)^000000:Exodus Token ^ff0000(100)^000000:Exodus Heart ^ff0000(500)^000000:Armor Refine Ticket ^ff0000(25)^000000:Weapon Refine Ticket ^ff0000(25)^000000:Soul Crystal ^ff0000(20)^000000")){
+case 1:
+mes "Please Input Desired amount";
+input @count;
+if(@count == 0){
+mes "Invalid Input";
+close;
+}
+if(##woetotalpointreward < @count*1){
+next;
+mes "^ff0000Sorry you dont have enough Woe Point^000000";
+close;
+} 
+else{
+mes "Here you go";
+getitem 41100,@count;
+set ##woetotalpointreward,##woetotalpointreward - @count*1; 
+close;
+} 
+break;
+case 2:
+mes "Please Input Desired amount";
+input @count;
+if(@count == 0){
+mes "Invalid Input";
+close;
+}
+
+if(##woetotalpointreward < @count*1){
+next;
+mes "^ff0000Sorry you dont have enough Woe Point^000000";
+close;
+} 
+else{
+mes "Here you go";
+getitem 41027,@count;
+set ##woetotalpointreward,##woetotalpointreward - @count*1; 
+close;
+} 
+break;
+case 3:
+mes "Please Input Desired amount";
+input @count;
+if(@count == 0){
+mes "Invalid Input";
+close;
+}
+
+if(##woetotalpointreward < @count*1){
+next;
+mes "^ff0000Sorry you dont have enough Woe Point^000000";
+close;
+} 
+else{
+mes "Here you go";
+getitem 41026,@count*20;
+set ##woetotalpointreward,##woetotalpointreward - @count*1; 
+close;
+} 
+
+break;
+case 4:
+mes "Please Input Desired amount";
+input @count;
+if(@count == 0){
+mes "Invalid Input";
+close;
+}
+
+if(##woetotalpointreward < @count*15){
+next;
+mes "^ff0000Sorry you dont have enough Woe Point^000000";
+close;
+} 
+else{
+mes "Here you go";
+getitem 54000,@count;
+set ##woetotalpointreward,##woetotalpointreward - @count*15; 
+close;
+} 
+
+break;
+case 5:
+mes "Please Input Desired amount";
+input @count;
+if(@count == 0){
+mes "Invalid Input";
+close;
+}
+
+if(##woetotalpointreward < @count*1){
+next;
+mes "^ff0000Sorry you dont have enough Woe Point^000000";
+close;
+} 
+else{
+mes "Here you go";
+getitem 50999,@count;
+set ##woetotalpointreward,##woetotalpointreward - @count*1; 
+close;
+} 
+
+break;
+case 6:
+mes "Please Input Desired amount";
+input @count;
+if(@count == 0){
+mes "Invalid Input";
+close;
+}
+
+if(##woetotalpointreward < @count*5){
+next;
+mes "^ff0000Sorry you dont have enough Woe Point^000000";
+close;
+}  
+else{
+mes "Here you go";
+getitem 54001,@count;
+set ##woetotalpointreward,##woetotalpointreward - @count*5; 
+close;
+} 
+ 
+break;
+case 7:
+mes "Please Input Desired amount";
+input @count;
+if(@count == 0){
+mes "Invalid Input";
+close;
+}
+
+if(##woetotalpointreward < @count*10){
+next;
+mes "^ff0000Sorry you dont have enough Woe Point^000000";
+close;
+} 
+else{
+mes "Here you go";
+getitem 41025,@count;
+set ##woetotalpointreward,##woetotalpointreward - @count*10; 
+close;
+} 
+
+break;
+case 8:
+mes "Please Input Desired amount";
+input @count;
+if(@count == 0){
+mes "Invalid Input";
+close;
+}
+
+if(##woetotalpointreward < @count*100){
+next;
+mes "^ff0000Sorry you dont have enough Woe Point^000000";
+close;
+} 
+else{
+mes "Here you go";
+getitem 59998,@count;
+set ##woetotalpointreward,##woetotalpointreward - @count*100; 
+close;
+} 
+
+break;
+case 9:
+mes "Please Input Desired amount";
+input @count;
+if(@count == 0){
+mes "Invalid Input";
+close;
+}
+
+if(##woetotalpointreward < @count*500){
+next;
+mes "^ff0000Sorry you dont have enough Woe Point^000000";
+close;
+} 
+else{
+mes "Here you go";
+getitem 60000,@count;
+set ##woetotalpointreward,##woetotalpointreward - @count*500; 
+close;
+} 
+
+break;
+
+case 10:
+mes "Please Input Desired amount";
+input @count;
+if(@count == 0){
+mes "Invalid Input";
+close;
+}
+
+if(##woetotalpointreward < @count*25){
+next;
+mes "^ff0000Sorry you dont have enough Woe Point^000000";
+close;
+} 
+else{
+mes "Here you go";
+getitem 41028,@count;
+set ##woetotalpointreward,##woetotalpointreward - @count*25; 
+close;
+} 
+
+break;
+
+case 11:
+mes "Please Input Desired amount";
+input @count;
+if(@count == 0){
+mes "Invalid Input";
+close;
+} 
+
+if(##woetotalpointreward < @count*25){
+next;
+mes "^ff0000Sorry you dont have enough Woe Point^000000"; 
+close;
+} 
+else{
+mes "Here you go";
+getitem 41029,@count;	
+set ##woetotalpointreward,##woetotalpointreward - @count*25; 
+close;
+} 
+
+break;
+
+case 12:
+mes "Please Input Desired amount";
+input @count;
+if(@count == 0){
+mes "Invalid Input";
+close;
+} 
+
+if(##woetotalpointreward < @count*20){
+next;
+mes "^ff0000Sorry you dont have enough Woe Point^000000"; 
+close;
+} 
+else{
+mes "Here you go";
+getitem 7849,@count;
+set ##woetotalpointreward,##woetotalpointreward - @count*20; 
+close;
+} 
+
+break;
+
+
+}
+case 2:
+next;
+mes "Goodbye Please Come again";
+close;
+}
+end;
+} */
+
+  
+//egg1,234,230,4	pointshop	Woe Points Shop	10356,##woetotalpointreward,60002:2,60003:70,41023:5,1577:200,1640:200,1281:200,1826:200,1187:200,1310:200,1641:200,2002:200,1827:200,13416:200,13177:200,13042:200,13179:200,1927:200,13418:200,1743:200,1282:200,1486:200,1981:200,1546:200,13110:200,13417:200,13176:200,13178:200,13307:200,1426:200,1576:200,1382:200,2720:250,2721:250,2722:250,2723:250,2724:250,2725:250,2549:300,2444:300,2394:300,2772:500
+
+
+

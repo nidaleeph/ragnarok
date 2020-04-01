@@ -1,0 +1,145 @@
+//========================================================================================
+//Title: Ghost's PvP System (Multi-announcer + Ladder)
+//Version: 1.4
+//Author: Ghost
+//Created: 12/27/2011
+//Released: 01/31/2012
+//Compatibility: rAthena | eAthena
+//Support: TXT & SQL
+//rAthena Topic: http://rathena.org/board/topic/58222-ghosts-scripts/
+//Required File: 
+//	SQL Table: http://pastebin.com/dEqrkczy
+//	Wav Files: http://www.mediafire.com/?i3uutvdp00jw4r8
+//References: 
+//	http://www.wowwiki.com/Defense_of_the_Ancients:_Allstars
+//Additional Note: 
+//	Multiple kill timer is set to Heroes of Newerth's 18 seconds.
+//	KDR Algorithm is originally written by me, Ghost.
+//	If you like this PvP System, say thanks at my rAthena topic.
+//Glossary:
+//	KDR: Kill Death Ratio
+//	SK: Streak Kill
+//	MK: Multi Kill
+//Credits:
+//	Thank you to the Athena community.
+//Changelog:
+//  v1.4 = Removed Loads of frivolous syntax; Optimized bits and bobs. [Skorm]
+//	v1.3 = Fixed .PvPMap$[0] settings [Ghost]
+//	     = Added .GMLevel at configuration [Ghost]
+//	     = Change SK Hex Color to ^00FF00 for visibility [Ghost]
+//	     = Fixed Streak Kill ended broadcast [Ghost]
+//	     = Typographical error (Ms. Pudding to Flamboyant) on Announcer Setting corrected [Ghost]
+//           = Changed Top 10 Players ranking from KDR to Kills [Ghost]
+//	v1.2 = Fixed obfuscation at PvP Statistics [Ghost]
+//	v1.1 = KDR Algorithm update for undefined calculation check [Lighta]
+//	     = Fixed obfuscation at Nemesis Kill [Lighta]
+//	v1.0 = Initial release
+//©2011-2012 Ghost
+//========================================================================================
+
+prontera,163,194,3	script	PvP Warper	10345,{
+mes "[ ^0065DFPVP Warper^000000 ]";
+mes "Welcome To PvP Warper";
+mes "I Can Help You Warp To PVP Room";
+next;
+mes "[ ^0065DFPvP Warper^000000 ]";
+mes "You Ready?";
+switch(select("PvP Room - "+getmapusers("1@ge_st")+" Users.:No")) {
+	case 1:
+		announce ""+ strcharinfo(0) +" Has Entered The PvP Room",bc_all; //announce and end
+		warp "1@ge_st" ,0,0;
+		close;
+		end;
+
+
+	case 2:
+		close;
+}
+
+OnInit:
+while (1) {
+delwaitingroom;
+set .@count, getmapusers("1@ge_st");
+waitingroom "PvP Room ["+ .@count + ((.@count==1) ? " User" : " Users") +"]",0;
+sleep 1000;
+}
+OnAgitstart:
+hideonnpc strnpcinfo(0);
+end;
+
+OnAgitEnd:
+hideoffnpc strnpcinfo(0);
+end;
+
+}
+
+guild_vs3	mapflag	nosave
+guild_vs3	mapflag	nowarp
+guild_vs3	mapflag	nowarpto
+guild_vs3	mapflag	noteleport
+guild_vs3	mapflag	noreturn
+guild_vs1	mapflag	nosave
+guild_vs1	mapflag	nowarp
+guild_vs1	mapflag	nowarpto
+guild_vs1	mapflag	noteleport
+guild_vs1	mapflag	noreturn
+
+/*
+cell_game	mapflag	noreturn
+cell_game	mapflag	pvp
+cell_game	mapflag	nosave
+cell_game	mapflag	nowarp
+cell_game	mapflag	nowarpto
+cell_game	mapflag	noteleport
+cell_game	mapflag	noreturn
+//cell_game	mapflag	pvp_noparty
+cell_game	mapflag	pvp_noguild
+cell_game	mapflag	noicewall
+cell_game	mapflag	nocommand
+*/
+pvp_y_1-2	mapflag	nosave
+pvp_y_1-2	mapflag	nowarp
+pvp_y_1-2	mapflag	nowarpto
+pvp_y_1-2	mapflag	noteleport
+pvp_y_1-2	mapflag	noreturn
+pvp_y_1-2	mapflag	pvp
+pvp_y_1-2	mapflag	nosave
+pvp_y_1-2	mapflag	nowarp
+pvp_y_1-2	mapflag	nowarpto
+pvp_y_1-2	mapflag	noteleport
+pvp_y_1-2	mapflag	noreturn
+pvp_y_1-2	mapflag	pvp_noparty
+pvp_y_1-2	mapflag	pvp_noguild
+pvp_y_1-2	mapflag	noicewall
+pvp_y_1-2	mapflag	nogo
+pvp_y_1-2	mapflag	noloot
+pvp_y_1-2	mapflag	nomobloot
+pvp_y_1-2	mapflag	nodrop
+
+
+
+//prontera,209,180,4	duplicate(PvP Warper)	PvP Warper#1	10134
+//morocc,166,90,4	duplicate(PvP Warper)	PvP Warper#2	10191
+geffen,57,98,4	duplicate(PvP Warper)	PvP Warper#3	10191
+payon,163,217,4	duplicate(PvP Warper)	PvP Warper#4	10191
+alberta,147,165,4	duplicate(PvP Warper)	PvP Warper#5	10191
+izlude,134,138,4	duplicate(PvP Warper)	PvP Warper#6	10191
+aldebaran,145,110,4	duplicate(PvP Warper)	PvP Warper#7	10191
+xmas,152,113,4	duplicate(PvP Warper)	PvP Warper#8	10191
+comodo,72,244,4	duplicate(PvP Warper)	PvP Warper#9	10191
+yuno,164,163,4	duplicate(PvP Warper)	PvP Warper#10	10191
+amatsu,120,143,4	duplicate(PvP Warper)	PvP Warper#11	10191
+gonryun,165,108,4	duplicate(PvP Warper)	PvP Warper#12	10191
+umbala,133,138,4	duplicate(PvP Warper)	PvP Warper#13	10191
+louyang,224,106,4	duplicate(PvP Warper)	PvP Warper#14	10191
+jawaii,249,139,5	duplicate(PvP Warper)	PvP Warper#15	10191
+ayothaya,156,158,4	duplicate(PvP Warper)	PvP Warper#16	10191
+lighthalzen,164,88,4	duplicate(PvP Warper)	PvP Warper#17	10191
+hugel,101,137,4	duplicate(PvP Warper)	PvP Warper#18	10191
+rachel,138,105,4	duplicate(PvP Warper)	PvP Warper#19	10191
+louyang,98,254,4	duplicate(PvP Warper)	PvP Warper#20	10134
+aldebaran,145,110,5	duplicate(PvP Warper)	PvP Warper#21	10134
+1@ghvy,134,102,4	duplicate(PvP Warper)	PvP Warper#22	10345
+
+
+

@@ -1,0 +1,20 @@
+-	script	News	-1,{
+OnInit:
+set .Time,30;		// Announce every x Minute.
+
+setarray .News$[0],	// Random Message to be Announced
+		"Haunted-Fatality RO: Welcome to Haunted Fatality Ragnarok Online",
+		"Haunted-Fatality RO: Join our facebook page [ https://www.facebook.com/HauntedFatalityRO/ ]",
+		"Haunted-Fatality RO: Join our facebook group[https://www.facebook.com/groups/hauntedfatalityro ]",
+		"Haunted-Fatality RO: Help us by advertising our server Haunted Fatality Ragnarok Online.",
+		"Haunted-Fatality RO: Help us grow by donating but remember donating is not mandatory.",
+		"Are you new to the Server? Be sure to claim your sologpack. Use @sologpack to claim.",
+		"Haunted-Fatality RO: Are You Guys Having Fun? For suggestionsm, just PM us on Facebook!.";
+		
+while( 1 ){
+	announce .News$[ rand( getarraysize( .News$ ) ) ],0;
+	sleep ( .Time * 10000 );
+	}
+end;
+}
+

@@ -1,0 +1,58 @@
+/*-	script	PVPPOINTS	-1,{
+OnPCKillEvent:
+getmapxy.@map$,.@x,.@y,BL_PC;
+if(getcharid(3)==killedrid) end;
+if(.@map$ != "guild_vs3") end;
+
+set .@player1, getcharid(3);
+set .@player2, killedrid; 
+
+attachrid(.@player2);
+set .@player2points, #pvpC;
+if(.@player2points) {
+ set #pvpC, #pvpC -1;
+ dispbottom "You Lost 1 PvP Point from "+rid2name(killerrid);
+ dispbottom "You have total of "+#pvpC+" Pvp Points";
+}
+ //emotion ET_CRY,1;
+
+attachrid(.@player1);
+if(.@player2points) {
+ dispbottom "Sorry no PvP points on the "+rid2name(killedrid);
+ //emotion ET_MERONG,1;
+}
+else
+ set #pvpC, #pvpC +1;
+ dispbottom "You Gained 1 PvP Point from "+rid2name(killedrid);
+ dispbottom "You have total of "+#pvpC+" Pvp Points";
+end;
+} */
+
+-	script	PVPPOINTS	-1,{
+OnInit:
+setarray .pvpmaps$[0],   
+		"prtg_cas01","prtg_cas02","prtg_cas03","prtg_cas04","prtg_cas05", 
+		"payg_cas01","payg_cas02","payg_cas03","payg_cas04","payg_cas05",
+		"gefg_cas01","gefg_cas02","gefg_cas03","gefg_cas04","gefg_cas05",
+		"aldeg_cas01","aldeg_cas02","aldeg_cas03","aldeg_cas04","aldeg_cas05",
+		"arug_cas01","arug_cas02","arug_cas03","arug_cas04","arug_cas05",
+		"schg_cas01","schg_cas02","schg_cas03","schg_cas04","schg_cas05","1@ge_st","ra_koe";
+		end;
+OnPCDieEvent:
+getmapxy.@map$,.@x,.@y,BL_PC;
+for (.@a = 0; .@a < getarraysize(.pvpmaps$); .@a++) { 
+if(getcharid(3)==killedrid) end;
+if(.@map$ == .pvpmaps$[.@a] ) {
+
+
+attachrid(killerrid);
+
+
+ set #pvpC, #pvpC +1;
+ dispbottom "You Gained 1 PvP Point from killing "+rid2name(killedrid);
+ dispbottom "You have total of "+#pvpC+" Pvp Points";
+end;
+}}
+}
+/*
+egg1,233,222,4	pointshop	PvP Points Shop	10437,#pvpC,60002:10,60003:300,40102:3,40101:1,12210:5,12214:2,2357:100,2524:100,2421:100,2115:50,2679:2500,2678:2500,2375:100,2374:100,2433:100,2537:50,2729:50,2554:1000,13412:500,13413:500,4430:2500,4407:2500,4359:3500,4363:3500,4367:3500,4357:3500,4365:3500,4361:3500,4441:4000,4128:4000,4399:5000 */

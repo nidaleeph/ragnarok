@@ -1,0 +1,110 @@
+1@ghvy,118,51,5	script	Branch Room Warper	936,{
+setarray $@maps$[1], "pvp_n_1-1", "pvp_n_2-1", "pvp_n_3-1", "pvp_n_4-1", "pvp_n_5-1", "pvp_n_6-1", "pvp_n_7-1";
+for(set .@b,1; .@b < getarraysize($@maps$); set .@b,.@b + 1) {
+	if(.@b==1){ set .@menu$, .@menu$  + "Public- "+((getmapusers($@maps$[.@b])>=30)?"^CD0000Closed^000000("+getmapusers($@maps$[.@b])+")":"^007700Open^000000("+getmapusers($@maps$[.@b])+")")+":"; } else { set .@menu$, .@menu$  + "Private["+(.@b-1)+"]- "+((getmapusers(""+$@maps$[.@b]+"")>=5)?"^CD0000Closed^000000("+getmapusers($@maps$[.@b])+")":"^007700Open^000000("+getmapusers($@maps$[.@b])+")")+":"; }
+}
+
+	mes "[Branch Room Warper]";
+	mes "What do you want?";
+	next;
+	mes "[Branch Room Warper]";
+	mes "Hmm..";
+	mes "It cost 10,000,000z";
+    	mes "Select the room you want to go in? or buy branch";
+	next;
+	switch(select("Find Room:Buy Branch")){
+	case 1:
+
+if(select(.@menu$)) { callfunc "GRfunction",$@maps$[@menu],@menu; }
+end;
+OnInit:
+  waitingroom "Branch Room!",0;
+  end;
+
+			case 2:
+				mes "[Branch Room Warper]";
+				callshop "Branches",1;
+				end;
+}}
+
+function	script	GRfunction	{
+if(getmapusers(getarg(0))<=30&&getarg(1)==1){
+		if (Zeny < 10000000) goto nomoney;
+		set Zeny, Zeny - 10000000;
+
+	warp getarg(0),0,0; end;
+}
+if(!getmapusers(getarg(0))){
+	mes "Input a new password.";
+	input($password$[getarg(1)]);
+		if (Zeny < 10000000) goto nomoney;
+		set Zeny, Zeny - 10000000;
+
+	next; warp getarg(0),0,0;
+	end;
+nomoney:
+	mes "[Time and Space Warper]";
+	mes "Sorry insufficient balance";
+	close;
+
+}
+if(getmapusers(getarg(0))<=5&&getarg(1)!=1) {
+	mes "This room is password protected please input the password now.";
+	input(@name$);
+	if(@name$==$password$[getarg(1)]){
+		mes "correct!"; next; warp getarg(0),0,0; end;
+	} else {
+		mes "Incorrect!";
+		close;
+	}
+} else {
+	mes "I'm sorry this room is full.";
+	close;
+
+}
+}
+
+// mapflag
+pvp_n_1-1	mapflag	nomemo
+pvp_n_2-1	mapflag	nomemo
+pvp_n_3-1	mapflag	nomemo
+pvp_n_4-1	mapflag	nomemo
+pvp_n_5-1	mapflag	nomemo
+pvp_n_6-1	mapflag	nomemo
+
+pvp_n_1-1	mapflag	nowarpto
+pvp_n_2-1	mapflag	nowarpto
+pvp_n_3-1	mapflag	nowarpto
+pvp_n_4-1	mapflag	nowarpto
+pvp_n_5-1	mapflag	nowarpto
+pvp_n_6-1	mapflag	nowarpto
+
+pvp_n_1-1	mapflag	noteleport
+pvp_n_2-1	mapflag	noteleport
+pvp_n_3-1	mapflag	noteleport
+pvp_n_4-1	mapflag	noteleport
+pvp_n_5-1	mapflag	noteleport
+pvp_n_6-1	mapflag	noteleport
+
+pvp_n_1-1	mapflag	nosave	SavePoint
+pvp_n_2-1	mapflag	nosave	SavePoint
+pvp_n_3-1	mapflag	nosave	SavePoint
+pvp_n_4-1	mapflag	nosave	SavePoint
+pvp_n_5-1	mapflag	nosave	SavePoint
+pvp_n_6-1	mapflag	nosave	SavePoint
+
+pvp_n_1-1	mapflag	nopenalty
+pvp_n_2-1	mapflag	nopenalty
+pvp_n_3-1	mapflag	nopenalty
+pvp_n_4-1	mapflag	nopenalty
+pvp_n_5-1	mapflag	nopenalty
+pvp_n_6-1	mapflag	nopenalty
+
+pvp_n_1-1	mapflag	nowarp
+pvp_n_2-1	mapflag	nowarp
+pvp_n_3-1	mapflag	nowarp
+pvp_n_4-1	mapflag	nowarp
+pvp_n_5-1	mapflag	nowarp
+pvp_n_6-1	mapflag	nowarp
+
+

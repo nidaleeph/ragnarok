@@ -1,0 +1,756 @@
+1@ghvy,121,102,5	script	All in One NPC	10354,{
+
+
+mes "[All in One]";
+mes "Hi, What u Want to do?.";
+	next;
+	switch(select("Instant Job Change:Rental Services:Platinum Skills:Reset Skill & Stats")) {
+case 1:
+// -- Configuration Option
+set .npcname$,"[ ^0000FF Instant Job Changer ^000000 ]";
+set .InfoMenu,0;					// Classes Informations Option [ 0 - Disable / 1 - Enable ]
+set .1stClassMenu,1;				// First Job Class Option [ 0 - Disable / 1 - Enable ]
+set .2ndClassMenu,1;				// Second Job Class Option [ 0 - Disable / 1 - Enable ]
+set .High1stClassMenu,1;			// High 1st Class Option [ 0 - Disable / 1 - Enable ]
+set .Trans2ndClassMenu,1;			// Transcendent Class Option [ 0 - Disable / 1 - Enable ]
+set .Trans3rdClassMenu,0;			// Third Job Class Option [ 0 - Disable / 1 - Enable ]
+set .ExpandedClassMenu,1;			// Expanded Class Option [ 0 - Disable / 1 - Enable ]
+set .BabyClassMenu,1;				// Baby Job Class Option [ 0 - Disable / 1 - Enable ]
+set .Baby3rdClassMenu,0;			// Baby Third Job Class Option [ 0 - Disable / 1 - Enable ]
+set .Allskills,1;					// Complete Skills Option [ 0 - Disable / 1 - Enable ]
+
+// -- Usable for Only 1 Time
+set .Based,1;						// [ 0 - Account Based  / 1 - Character Based ]
+
+
+//if( ClassHelper == 1 || #ClassHelper == 1 ) end;
+
+Main_Menu:
+	mes .npcname$;
+	mes "I am the Job Class Helper...";
+	mes "I am here to help you.";
+	mes " ^FF0000________________________________^000000";
+	mes "Do you wish to become Stronger ?";
+	mes " ^FF0000________________________________^000000";
+	next;
+	mes .npcname$;
+	mes "Do you admire those who have a great power ? Do you wish to become a part of them ? If yes , then which classes that you admire the most ?";
+	next;
+	switch(select(( .InfoMenu == 0 )?"":"^4EEE94Classes Information^000000",
+				( .1stClassMenu == 0 )?"":"^0000FFFirst Job Classes^000000",
+				( .2ndClassMenu == 0 )?"":"^0000FFSecond Job Classes^000000",	
+				( .High1stClassMenu == 0 )?"":"^0000FFHigh First Job Classes^000000",	
+				( .Trans2ndClassMenu == 0 )?"":"^0000FFTranscendent Job Classes^000000",	
+				( .Trans3rdClassMenu == 0 )?"":"^0000FFThird Job Classes^000000",		
+				( .ExpandedClassMenu == 0 )?"":"^0000FFExpanded Job Classes^000000",	
+				( .BabyClassMenu == 0 )?"":"^0000FFBaby Normal Job Classes^000000",		
+				( .Baby3rdClassMenu == 0 )?"":"^0000FFBaby Third Job Classes^000000",		
+				"^FF0000Sorry, i admire nobody....^000000")) {
+
+					Case 1: goto Classes_info;
+					Case 2:	goto FirstJob_Classes;
+					Case 3:	goto SecondJob_Classes;
+					Case 4:	goto HighFirstJob_Classes;
+					Case 5:	goto TransSecondJob_Classes;
+					Case 6:	goto TransThirdJob_Classes;
+					Case 7:	goto ExpandedJob_Classes;
+					Case 8:	goto BabyJob_Classes;
+					Case 9:	goto BabyThirdJob_Classes;
+					Case 10:		
+							if ( .Based == 0 ){	set #ClassHelper,1;	}
+							if ( .Based == 1 ){	set ClassHelper,1;	}
+							close;
+			}
+	
+FirstJob_Classes:
+	mes .npcname$;
+	mes "So, i give you a chance now. Which Classes will you choose to join ? Tell me your desired Classes.";
+	next;
+	switch(select("^76EE00Swordman^000000",
+				"^76EE00Magician^000000",
+				"^76EE00Archer^000000",
+				"^76EE00Acolyte^000000",
+				"^76EE00Merchant^000000",
+				"^76EE00Thief^000000",
+				"^FF0000Back^000000")) {
+
+// --- callsub Job_Changing,<JOB>,<BaseLv>,<JobLv>,<Skill>,<Announce>;	
+
+			Case 1:	callsub Job_Changing,1,255,120,120,"All";
+			Case 2:	callsub Job_Changing,2,255,120,120,"All";
+			Case 3:	callsub Job_Changing,3,255,120,120,"All";
+			Case 4:	callsub Job_Changing,4,255,120,120,"All";
+			Case 5:	callsub Job_Changing,5,255,120,120,"All";
+			Case 6:	callsub Job_Changing,6,255,120,120,"All";
+			Case 7:	goto Main_Menu;
+		}
+
+HighFirstJob_Classes:
+	mes .npcname$;
+	mes "So, i give you a chance now. Which Classes will you choose to join ? Tell me your desired Classes.";
+	next;
+	switch(select("^76EE00High Swordman^000000",
+				"^76EE00High Magician^000000",
+				"^76EE00High Archer^000000",
+				"^76EE00High Acolyte^000000",
+				"^76EE00High Merchant^000000",
+				"^76EE00High Thief^000000",
+				"^FF0000Back^000000")) {
+
+// --- callsub Job_Changing,<JOB>,<BaseLv>,<JobLv>,<Skill>,<Announce>;	
+
+			Case 1:	callsub Job_Changing,4002,255,120,120,"All";
+			Case 2:	callsub Job_Changing,4003,255,120,120,"All";
+			Case 3:	callsub Job_Changing,4004,255,120,120,"All";
+			Case 4:	callsub Job_Changing,4005,255,120,120,"All";
+			Case 5:	callsub Job_Changing,4006,255,120,120,"All";
+			Case 6:	callsub Job_Changing,4007,255,120,120,"All";
+			Case 7:	goto Main_Menu;
+		}
+		
+SecondJob_Classes:
+	mes .npcname$;
+	mes "So, i give you a chance now. Which Classes will you choose to join ? Tell me your desired Classes.";
+	next;
+	switch(select("^76EE00Knight^000000",
+				"^76EE00Priest^000000",
+				"^76EE00Wizard^000000",
+				"^76EE00Blacksmith^000000",
+				"^76EE00Hunter^000000",
+				"^76EE00Assassin^000000",
+				"^76EE00Crusader^000000",
+				"^76EE00Monk^000000",
+				"^76EE00Sage^000000",
+				"^76EE00Rogue^000000",
+				"^76EE00Alchemist^000000",
+				( Sex == 0 )?"":"^76EE00Dancer^000000",		
+				( Sex == 1 )?"":"^76EE00Bard^000000",	
+				"^FF0000Back^000000")) {
+
+// --- callsub Job_Changing,<JOB>,<BaseLv>,<JobLv>,<Skill>,<Announce>;	
+			
+			Case 1:	callsub Job_Changing,7,255,120,110,"Self";
+			Case 2:	callsub Job_Changing,8,255,120,110,"Self";
+			Case 3:	callsub Job_Changing,9,255,120,110,"Self";
+			Case 4:	callsub Job_Changing,10,255,120,110,"Self";
+			Case 5:	callsub Job_Changing,11,255,120,110,"Self";
+			Case 6:	callsub Job_Changing,12,255,120,110,"Self";
+			Case 7:	callsub Job_Changing,14,255,120,110,"Self";
+			Case 8:	callsub Job_Changing,15,255,120,110,"Self";
+			Case 9:	callsub Job_Changing,16,255,120,110,"Self";
+			Case 10:	callsub Job_Changing,17,255,120,110,"Self";
+			Case 11:	callsub Job_Changing,18,255,120,110,"Self";
+			Case 12:	callsub Job_Changing,20,255,120,110,"Self";
+			Case 13:	callsub Job_Changing,19,255,120,110,"Self";
+			Case 14:	goto Main_Menu;
+		}
+
+TransSecondJob_Classes:
+	mes .npcname$;
+	mes "So, i give you a chance now. Which Classes will you choose to join ? Tell me your desired Classes.";
+	next;
+	switch(select("^76EE00Lord Knight^000000",
+				"^76EE00High Priest^000000",
+				"^76EE00High Wizard^000000",
+				"^76EE00Whitesmith^000000",
+				"^76EE00Sniper^000000",
+				"^76EE00Assassin Cross^000000",
+				"^76EE00Paladin^000000",
+				"^76EE00Champion^000000",
+				"^76EE00Professor^000000",
+				"^76EE00Stalker^000000",
+				"^76EE00Creator^000000",
+				( Sex == 0 )?"":"^76EE00Gypsy^000000",		
+				( Sex == 1 )?"":"^76EE00Clowm^000000",	
+				"^FF0000Back^000000")) {
+
+// --- callsub Job_Changing,<JOB>,<BaseLv>,<JobLv>,<Skill>,<Announce>;	
+			
+			Case 1:	callsub Job_Changing,4008,255,120,170,"Self";
+			Case 2:	callsub Job_Changing,4009,255,120,170,"Self";
+			Case 3:	callsub Job_Changing,4010,255,120,170,"Self";
+			Case 4:	callsub Job_Changing,4011,255,120,170,"Self";
+			Case 5:	callsub Job_Changing,4012,255,120,170,"Self";
+			Case 6:	callsub Job_Changing,4013,255,120,170,"Self";
+			Case 7:	callsub Job_Changing,4015,255,120,170,"Self";
+			Case 8:	callsub Job_Changing,4016,255,120,170,"Self";
+			Case 9:	callsub Job_Changing,4017,255,120,170,"Self";
+			Case 10:	callsub Job_Changing,4018,255,120,170,"Self";
+			Case 11:	callsub Job_Changing,4019,255,120,170,"Self";
+			Case 12:	callsub Job_Changing,4021,255,120,170,"Self";
+			Case 13:	callsub Job_Changing,4020,255,120,170,"Self";
+			Case 14:	goto Main_Menu;
+		}
+
+TransThirdJob_Classes:
+	mes .npcname$;
+	mes "So, i give you a chance now. Which Classes will you choose to join ? Tell me your desired Classes.";
+	next;
+	switch(select("^76EE00Rune Knight^000000",
+				"^76EE00Warlock^000000",
+				"^76EE00Ranger^000000",
+				"^76EE00Arch Bishop^000000",
+				"^76EE00Mechanic^000000",
+				"^76EE00Guillotine Cross^000000",
+				"^76EE00Royal Guard^000000",
+				"^76EE00Sorcerer^000000",
+				( Sex == 0 )?"":"^76EE00Wanderer^000000",		
+				( Sex == 1 )?"":"^76EE00Minstrel^000000",	
+				"^76EE00Shura^000000",
+				"^76EE00Genetic^000000",
+				"^76EE00Shadow Chaser^000000",
+				"^FF0000Back^000000")) {
+
+// --- callsub Job_Changing,<JOB>,<BaseLv>,<JobLv>,<Skill>,<Announce>;	
+			
+			Case 1:	callsub Job_Changing,4060,99,70,200,"All";
+			Case 2:	callsub Job_Changing,4061,99,70,200,"All";
+			Case 3:	callsub Job_Changing,4062,99,70,200,"All";
+			Case 4:	callsub Job_Changing,4063,99,70,200,"All";
+			Case 5:	callsub Job_Changing,4064,99,70,200,"All";
+			Case 6:	callsub Job_Changing,4065,99,70,200,"All";
+			Case 7:	callsub Job_Changing,4073,99,70,200,"All";
+			Case 8:	callsub Job_Changing,4074,99,70,200,"All";
+			Case 9:	callsub Job_Changing,4076,99,70,200,"All";
+			Case 10:	callsub Job_Changing,4075,70,70,200,"All";
+			Case 11:	callsub Job_Changing,4077,70,70,200,"All";
+			Case 12:	callsub Job_Changing,4078,70,70,200,"All";
+			Case 13:	callsub Job_Changing,4079,70,70,200,"All";
+			Case 14:	goto Main_Menu;
+		}
+				
+ExpandedJob_Classes:
+	mes .npcname$;
+	mes "So, i give you a chance now. Which Classes will you choose to join ? Tell me your desired Classes.";
+	next;
+	switch(select("^76EE00Super Novice^000000",
+				"^76EE00Gunslinger^000000",
+				"^76EE00Ninja^000000",
+				"^76EE00Star Gladiator^000000",
+				"^76EE00Taekwon Kid^000000",
+				"^76EE00Soul Linker^000000",
+				"^FF0000Back^000000")) {
+
+// --- callsub Job_Changing,<JOB>,<BaseLv>,<JobLv>,<Skill>,<Announce>;	
+
+			Case 1:	callsub Job_Changing,23,255,120,170,"All";
+			Case 2:	callsub Job_Changing,24,255,120,170,"All";
+			Case 3:	callsub Job_Changing,25,255,120,170,"All";
+			Case 4:	callsub Job_Changing,4047,255,120,170,"All";
+			Case 5:	callsub Job_Changing,4046,255,120,170,"All";
+			Case 6:	callsub Job_Changing,4049,255,120,170,"All";
+			Case 7:	goto Main_Menu;
+		}
+
+BabyJob_Classes:
+	mes .npcname$;
+	mes "So, i give you a chance now. Which Classes will you choose to join ? Tell me your desired Classes.";
+	next;
+	switch(select("^76EE00Baby Swordman^000000",
+				"^76EE00Baby Magician^000000",
+				"^76EE00Baby Archer^000000",
+				"^76EE00Baby Acolyte^000000",
+				"^76EE00Baby Merchant^000000",
+				"^76EE00Baby Thief^000000",
+				"^76EE00Baby Knight^000000",
+				"^76EE00Baby Priest^000000",
+				"^76EE00Baby Wizard^000000",
+				"^76EE00Baby Blacksmith^000000",
+				"^76EE00Baby Hunter^000000",
+				"^76EE00Baby Assassin^000000",
+				"^76EE00Baby Crusader^000000",
+				"^76EE00Baby Monk^000000",
+				"^76EE00Baby Sage^000000",
+				"^76EE00Baby Rogue^000000",
+				"^76EE00Baby Alchemist^000000",
+				( Sex == 0 )?"":"^76EE00Baby Dancer^000000",		
+				( Sex == 1 )?"":"^76EE00Baby Bard^000000",	
+				"^76EE00Baby Baby^000000",
+				"^FF0000Back^000000")) {
+
+// --- callsub Job_Changing,<JOB>,<BaseLv>,<JobLv>,<Skill>,<Announce>;	
+			
+			Case 1:	callsub Job_Changing,4024,255,50,60,"Self";
+			Case 2:	callsub Job_Changing,4025,255,50,60,"Self";
+			Case 3:	callsub Job_Changing,4026,255,50,60,"Self";
+			Case 4:	callsub Job_Changing,4027,255,50,60,"Self";
+			Case 5:	callsub Job_Changing,4028,255,50,60,"Self";
+			Case 6:	callsub Job_Changing,4029,255,50,60,"Self";
+			Case 7:	callsub Job_Changing,4030,255,50,110,"Self";
+			Case 8:	callsub Job_Changing,4031,255,50,110,"Self";
+			Case 9:	callsub Job_Changing,4032,255,50,110,"Self";
+			Case 10:	callsub Job_Changing,4033,255,50,110,"Self";
+			Case 11:	callsub Job_Changing,4034,255,50,110,"Self";
+			Case 12:	callsub Job_Changing,4035,255,50,110,"Self";
+			Case 13:	callsub Job_Changing,4037,255,50,110,"Self";
+			Case 14:	callsub Job_Changing,4038,255,50,110,"Self";
+			Case 15:	callsub Job_Changing,4039,255,50,110,"Self";
+			Case 16:	callsub Job_Changing,4040,255,50,110,"Self";
+			Case 17:	callsub Job_Changing,4041,255,50,110,"Self";
+			Case 18:	callsub Job_Changing,4043,255,50,110,"Self";
+			Case 19:	callsub Job_Changing,4042,255,50,110,"Self";
+			Case 20:	callsub Job_Changing,4045,255,50,110,"Self";
+			Case 21:	goto Main_Menu;
+		}
+		
+BabyThirdJob_Classes:
+	mes .npcname$;
+	mes "So, i give you a chance now. Which Classes will you choose to join ? Tell me your desired Classes.";
+	next;
+	switch(select("^76EE00Baby Rune Knight^000000",
+				"^76EE00Baby Warlock^000000",
+				"^76EE00Baby Ranger^000000",
+				"^76EE00Baby Arch Bishop^000000",
+				"^76EE00Baby Mechanic^000000",
+				"^76EE00Baby Guillotine Cross^000000",
+				"^76EE00Baby Royal Guard^000000",
+				"^76EE00Baby Sorcerer^000000",
+				( Sex == 0 )?"":"^76EE00Baby Wanderer^000000",		
+				( Sex == 1 )?"":"^76EE00Baby Minstrel^000000",	
+				"^76EE00Baby Shura^000000",
+				"^76EE00Baby Genetic^000000",
+				"^76EE00Baby Shadow Chaser^000000",
+				"^FF0000Back^000000")) {
+
+// --- callsub Job_Changing,<JOB>,<BaseLv>,<JobLv>,<Skill>,<Announce>;	
+			
+			Case 1:	callsub Job_Changing,4096,99,70,200,"All";
+			Case 2:	callsub Job_Changing,4097,99,70,200,"All";
+			Case 3:	callsub Job_Changing,4098,99,70,200,"All";
+			Case 4:	callsub Job_Changing,4099,99,70,200,"All";
+			Case 5:	callsub Job_Changing,4100,99,70,200,"All";
+			Case 6:	callsub Job_Changing,4101,99,70,200,"All";
+			Case 7:	callsub Job_Changing,4102,99,70,200,"All";
+			Case 8:	callsub Job_Changing,4103,99,70,200,"All";
+			Case 9:	callsub Job_Changing,4105,99,70,200,"All";
+			Case 10:	callsub Job_Changing,4104,99,70,200,"All";
+			Case 11:	callsub Job_Changing,4106,99,70,200,"All";
+			Case 12:	callsub Job_Changing,4107,99,70,200,"All";
+			Case 13:	callsub Job_Changing,4108,99,70,200,"All";
+			Case 14:	goto Main_Menu;
+		}
+
+Job_Changing:
+		mes .npcname$;
+		mes "You are now a part of ^FF0000"+jobname(getarg(0))+"^000000.";
+		if (compare(getarg(4),"All")){	announce "[ "+strcharinfo(0)+" ] has changed to [ "+jobname(getarg(0))+" ].",bc_all,0x76EE00;	}
+		if (compare(getarg(4),"Map")){	announce "[ "+strcharinfo(0)+" ] has changed to [ "+jobname(getarg(0))+" ].",bc_map,0x76EE00;	}
+		if (compare(getarg(4),"Area")){	announce "[ "+strcharinfo(0)+" ] has changed to [ "+jobname(getarg(0))+" ].",bc_area,0x76EE00;	}
+		if (compare(getarg(4),"Self")){	announce "[ "+strcharinfo(0)+" ] has changed to [ "+jobname(getarg(0))+" ].",bc_self,0x76EE00;	}
+		jobchange getarg(0);
+		set BaseLevel,getarg(1);
+   set JobLevel,getarg(2);
+		ResetSkill;
+		ResetStatus;
+   set SkillPoint,getarg(3);
+		if ( .Allskills == 1 ){
+		atcommand "@allskills";
+   set SkillPoint,0;
+		}
+   percentheal 100,100;
+		if ( .Based == 0 ){	set #ClassHelper,1;	}
+		if ( .Based == 1 ){	set ClassHelper,1;	}
+	 //warp "new_1-1",53,106;
+	 //save "prontera",156,191;
+		close;
+	
+Classes_info:
+	mes .npcname$;
+	mes "=====[^76EE00 Swordman Classes ^000000]=====";
+	mes " ^FF0000________________________________^000000";
+	mes "^4EEE94Description :^000000";
+	mes "Enthusiastic skills in sword fighting is a definite attraction to all teenagers. Easy to control and master character enables most players to be a great player.";
+	mes " ^FF0000________________________________^000000";
+	next;
+	mes .npcname$;
+	mes "=====[^76EE00 Archer Classes ^000000]=====";
+	mes " ^FF0000________________________________^000000";
+	mes "^4EEE94Description :^000000";
+	mes "Long ranged attack ability and special techniques of archers in defeating enemy often lure players to try this.";
+	mes " ^FF0000________________________________^000000";
+	next;
+	mes .npcname$;
+	mes "=====[^76EE00 Mage Classes ^000000]=====";
+	mes " ^FF0000________________________________^000000";
+	mes "^4EEE94Description :^000000";
+	mes "Fascinating element techniques involvement of nature in its abilities is truly amazing with their series of undefeatable magics.";
+	mes " ^FF0000________________________________^000000";
+	next;
+	mes .npcname$;
+	mes "=====[^76EE00 Thief Classes ^000000]=====";
+	mes " ^FF0000________________________________^000000";
+	mes "^4EEE94Description :^000000";
+	mes "Poisoning and dodging abilities will defeat most of the enemy. Maximum defensive and offensive ability caused this character to fearsome one.";
+	mes " ^FF0000________________________________^000000";
+	next;
+	mes .npcname$;
+	mes "=====[^76EE00 Acolyte Classes ^000000]=====";
+	mes " ^FF0000________________________________^000000";
+	mes "^4EEE94Description :^000000";
+	mes "A supportive character, most of the skills like helping will benefit to teammates who lead to teammates act like a terminator.";
+	mes " ^FF0000________________________________^000000";
+	next;
+	mes .npcname$;
+	mes "=====[^76EE00 Merchant Classes ^000000]=====";
+	mes " ^FF0000________________________________^000000";
+	mes "^4EEE94Description :^000000";
+	mes "Involving communication with other players that emphasizes on battles, intelligence in business dealing. His versatility made him must not be look down.";
+	mes " ^FF0000________________________________^000000";
+	next;
+	mes .npcname$;
+	mes "=====[^76EE00 Super Novice ^000000]=====";
+	mes " ^FF0000________________________________^000000";
+	mes "^4EEE94Description :^000000";
+	mes "A job who are Advanced after Novice Class. It look alike like a Novice but it is not. Beside that, it can learn most of the skills for all 1st Job Class.";
+	mes " ^FF0000________________________________^000000";
+	next;
+	mes .npcname$;
+	mes "=====[^76EE00 Gunslinger ^000000]=====";
+	mes " ^FF0000________________________________^000000";
+	mes "^4EEE94Description :^000000";
+	mes "The only Job class in RO who are using Gun as weapon. If are you a Gun Lover , there is no doubt you will choose this Job.";
+	mes " ^FF0000________________________________^000000";
+	next;
+	mes .npcname$;
+	mes "=====[^76EE00 Ninja ^000000]=====";
+	mes " ^FF0000________________________________^000000";
+	mes "^4EEE94Description :^000000";
+	mes "A mysterious Job Class , who alway processing Ancient Spells , look alike with Mage but not mage , good in PK , can evade very well during PK.";
+	mes " ^FF0000________________________________^000000";
+	next;
+	mes .npcname$;
+	mes "=====[^76EE00 Taekwon ^000000]=====";
+	mes " ^FF0000________________________________^000000";
+	mes "^4EEE94Description :^000000";
+	mes "Just like the name has mentioned. The only class in RO who are not using any Weapon. Attack enemy using barehand and foots. ";
+	mes " ^FF0000________________________________^000000";
+	next;
+	mes .npcname$;
+	mes "=====[^76EE00 Star Gladiator ^000000]=====";
+	mes " ^FF0000________________________________^000000";
+	mes "^4EEE94Description :^000000";
+	mes "A class who can use the power of the Sun / Star / Moon. By processing the power of Universe to gain a stronger Power.";
+	mes " ^FF0000________________________________^000000";
+	next;
+	mes .npcname$;
+	mes "=====[^76EE00 Soul Linker ^000000]=====";
+	mes " ^FF0000________________________________^000000";
+	mes "^4EEE94Description :^000000";
+	mes "Class that work like a Shaman, who able to recalling the soul of the dead from the underworld to Boost other class ability.";
+	mes " ^FF0000________________________________^000000";
+	next;
+	goto Main_Menu;
+
+
+case 2:
+mes "[All in One]";
+	mes "Please Choose What You Want To Rent.";
+	next;
+	switch(select("Cart:Falcon:Peco")) {
+		case 1:
+			if((BaseClass == Job_Merchant || BaseJob == Job_SuperNovice) && checkcart() == 0 && getskilllv("MC_PUSHCART")>0) {
+				setcart;
+				close;
+			}else{
+				mes "[All in One]";
+				mes "Sorry " + strcharinfo(0) + ", Please make sure you are the required job and have the required skill.";
+				close;
+			}
+		case 2:
+			if(BaseJob != Job_Archer && BaseClass == Job_Archer && checkfalcon() == 0 && getskilllv("HT_FALCON")>0) {
+				setfalcon;
+				close;
+			}else{
+				mes "[All in One]";
+				mes "Sorry " + strcharinfo(0) + ", Please make sure you are the required job and have the required skill.";
+				close;
+			}					
+		case 3:
+			if (BaseJob != Job_Swordman && BaseClass == Job_Swordman && checkriding() == 0 && getskilllv("KN_RIDING")>0) {
+				setriding;
+				close;
+			}else{
+				mes "[All in One]";
+				mes "Sorry " + strcharinfo(0) + ", Please make sure you are the required job and have the required skill.";
+				close;
+			}
+	}
+case 3:
+mes "[All in One]";
+	mes "Do you really want the special skills available to your job.";
+	mes "Would you like these skills now?";
+	next;
+	if (select("Yes Please:No") == 2) {
+		mes "[All in OneC]";
+		mes "Have a nice day... >.>";
+		close;
+	}
+	skill 142,1,0; // First Aid
+	if (BaseClass == Job_Novice) {
+		skill 143,1,0; // Play Dead
+	} else if (BaseClass == Job_Swordman) {
+		skill 144,1,0; // Moving HP-Recovery
+		skill 145,1,0; // Fatal Blow
+		skill 146,1,0; // Auto Berserk
+	} else if (BaseClass == Job_Mage) {
+		skill 157,1,0; // Energy Coat
+	} else if (BaseClass == Job_Archer) {
+		skill 147,1,0; // Arrow Crafting
+		skill 148,1,0; // Arrow Repel
+	} else if (BaseClass == Job_Merchant) {
+		skill 153,1,0; // Cart Revolution
+		skill 154,1,0; // Change Cart
+		skill 155,1,0; // Crazy Uproar
+	} else if (BaseClass == Job_Thief) {
+		skill 149,1,0; // Sand Attack
+		skill 150,1,0; // Back Slide
+		skill 151,1,0; // Find Stone
+		skill 152,1,0; // Stone Fling
+	} else if (BaseClass == Job_Acolyte) {
+		skill 156,1,0; // Holy Light
+	}
+	if (Class == Job_Knight || Class == Job_Lord_Knight) {
+		skill 1001,1,0; // Charge Attack
+	} else if (Class == Job_Crusader || Class == Job_Paladin) {
+		skill 1002,1,0; // Shrink
+	} else if (Class == Job_Wizard || Class == Job_High_Wizard) {
+		skill 1006,1,0; // Sight Blaster
+	} else if (Class == Job_Sage || Class == Job_Professor) {
+		skill 1007,1,0; // Create Elemental Converter
+		skill 1008,1,0; // Elemental Change Water
+		skill 1017,1,0; // Elemental Change Earth
+		skill 1018,1,0; // Elemental Change Fire
+		skill 1019,1,0; // Elemental Change Wind
+	} else if (Class == Job_Hunter || Class == Job_Sniper) {
+		skill 1009,1,0; // Phantasmic Arrow
+	} else if (Class == Job_Bard || Class == Job_Clown) {
+		skill 1010,1,0; // Pang Voice
+	} else if (Class == Job_Dancer || Class == Job_Gypsy) {
+		skill 1011,1,0; // Wink of Charm
+	} else if (Class == Job_Blacksmith || Class == Job_Whitesmith) {
+		skill 1012,1,0; // Unfair Trick
+		skill 1013,1,0; // Greed
+	} else if (Class == Job_Alchemist || Class == Job_Creator) {
+		skill 238,1,0; // Bioethics
+	} else if (Class == Job_Assassin || Class == Job_Assassin_Cross) {
+		skill 1003,1,0; // Sonic Acceleration
+		skill 1004,1,0; // Throw Venom Knife
+	} else if (Class == Job_Rogue || Class == Job_Stalker) {
+		skill 1005,1,0; // Close Confine
+	} else if (Class == Job_Priest || Class == Job_High_Priest) {
+		skill 1014,1,0; // Redemptio
+	} else if (Class == Job_Monk || Class == Job_Champion) {
+		skill 1015,1,0; // Ki Translation
+		skill 1016,1,0; // Ki Explosion
+	}
+	mes "[All in One]";
+	mes "There you go!";
+	close;
+
+case 4:
+	mes "[All in One]";
+	mes "Reset Stats: 5,000z";
+	mes "Reset Skills: 5,000z";
+	mes "Reset Both: 9,000z";
+	mes "Please select the service you want:";
+	next;
+	switch(select("^FF3355Reset Skills:Reset Stats:Reset Both^000000:Quit")) {
+		case 1:
+			mes "[All in One]";
+			if (Zeny < 5000) {
+				mes "Sorry, you don't have enough Zeny.";
+				close;
+			}
+			mes "Alright, here we go now.. Remember, changes won't take effect until you log back on!";
+			set Zeny,zeny-5000;
+			ResetSkill;
+			close;
+		case 2:
+			mes "[All in One]";
+			if (Zeny < 5000) {
+				mes "Sorry, you don't have enough Zeny.";
+				close;
+			}
+			mes "Alright, here we go now.. Remember, changes won't take effect until you log back on!";
+			set Zeny,zeny-5000;
+			ResetStatus;
+			close;
+		case 3:
+			mes "[All in One]";
+			if (Zeny < 9000) {
+				mes "Sorry, you don't have enough Zeny.";
+				close;
+			}
+			mes "Alright, here we go now.. Remember, changes won't take effect until you log back on!";
+			set Zeny,zeny-9000;
+			ResetSkill;
+			ResetStatus;
+			close;
+		case 4:
+			close;
+	}
+
+case 5:
+mes "[All in One]";
+	mes "Good day, young one. I have the power to remove cards that you have compounded onto your equipment. Does this idea please you?";
+	next;
+	.@weight = 100 * Weight / MaxWeight;
+	if (90 <= .@weight) {
+	mes "[ Wise Old Woman ]";
+	mes "You're currently at ^FF0000" + .@weight + "%^000000 of your maximum weight.";
+	next;
+	mes "[ Wise Old Woman ]";
+	mes "Please remove some items before claiming it.";
+	close; 
+}
+//	getinventorylist;
+//	if( @inventorylist_count >  ){
+//	mes "[ Wise Old Woman ]";
+//	mes "Your inventory slot is getting full, please remove some items before claiming it.";
+//	close; 
+//}
+
+
+	switch(select("Yes, it does.:What do you charge?:No thanks.")) {
+	case 1:
+		mes "[All in One]";
+		mes "Very well. Which item shall I examine for you?";
+		next;
+
+		setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
+		for( set .@i,1; .@i <= 10; set .@i,.@i+1 ) {
+			if( getequipisequiped(.@indices[.@i]) )
+				set .@menu$, .@menu$ + F_getpositionname(.@indices[.@i]) + "-[" + getequipname(.@indices[.@i]) + "]";
+			set .@menu$, .@menu$ + ":";
+		}
+		set .@part, .@indices[ select(.@menu$) ];
+//getinventorylist;
+
+//while( .@i < @inventorylist_count ){
+//if( countbound() ) {
+//	for( .@a = 0; .@a < getarraysize( @bound_items ); .@a++ ) {
+//	if( @bound_items[.@a] == getequipid(.@part) ) {
+//		mes "[All in One NPC]";
+//               mes "Young one... Sorry. I can't remove cards from bounded items.";
+//                close;
+//        }
+//set .@i,.@i + 1;
+//     }
+//}
+//}
+
+
+
+		if(!getequipisequiped(.@part)) {
+			mes "[Wise Old Woman]";
+			mes "Young one... Your not wearing anything there that I can remove cards from.";
+			close;
+		}
+		if(getequipcardcnt(.@part) == 0) {
+			mes "[Wise Old Woman]";
+			mes "Young one... There are no cards compounded on this item. I can do nothing with it, I'm afraid.";
+			close;
+		}
+		set .@cardcount,getequipcardcnt(.@part);
+		
+		if (!checkweight(1202,(.@cardcount+1))) { 
+			mes "^3355FFJust a minute!";
+			mes "I can't offer any of my";
+			mes "services to you because";
+			mes "you're carrying too much";
+			mes "stuff. Put your extra items in";
+			mes "Kafra Storage and come again~";
+			close;
+		}
+		mes "[All in One]";
+		mes "This item has " + .@cardcount + " cards compounded on it. To perform my magic, I will need " + (.zenycost+(.@cardcount * .percardcost)) + " zeny, a ^0000FFStar Crumb^000000, and a ^0000FFYellow Gemstone^000000.";
+		next;
+		if(select("Very well. Do it.:Never mind.") == 2) {
+			mes "[Wise Old Woman]";
+			mes "Very well. Return at once if you seek my services.";
+			close;
+		}
+		if((zeny < (.zenycost+(.@cardcount * .percardcost))) || (countitem(1000) < 1) || (countitem(715) < 1)) {
+			mes "[Wise Old Woman]";
+			mes "You do not have all the items I require to work my magic, child. Come again when you do.";
+			close;
+		}
+		mes "[All in One]";
+		mes "Before I begin, I must warn you--I may fail. If I do, I may destroy the cards, the item, or both. I do not give refunds. That being said, which is more important to you: The cards, or the item?";
+		next;
+		switch(select("I changed my mind about this.:The item.:The cards.")) {
+		case 1:
+			mes "[Wise Old Woman]";
+			mes "Very well. Return at once if you seek my services.";
+			close;
+		case 2:
+			set .@failtype,1;
+			break;
+		case 3:
+			set .@failtype,2;
+		}
+		mes "[All in One]";
+		mes "Very well. I shall begin.";
+		set Zeny, Zeny - (.zenycost+(.@cardcount * .percardcost));
+		delitem 1000,1; //Star_Crumb
+		delitem 715,1; //Yellow_Gemstone
+		
+		// Replace the constants in the next 3 lines with failure chance values defined in refine_db.txt
+		// First value = Total failure chance (item and cards destroyed)
+		// Second value = Partial failure chance (one or the other is destroyed, player decides which one is safe)
+		// Third value = Harmless failure chance (all that's lost is your investment)
+
+		set .@failchance,rand(100);
+		if (.faildestroy==1) {
+			if(.@failchance < 2) {
+				next;
+				failedremovecards .@part,0;
+				mes "[Wise Old Woman]";
+				mes "The process was a total failure. I am afraid the item and the cards were destroyed.";
+				close;
+			}
+
+			if(.@failchance < 8) {
+				if (.@failtype == 1) {
+					next;
+					failedremovecards .@part,1;
+					mes "[Wise Old Woman]";
+					mes "While I have managed to remove the cards from the item, they were destroyed in the process. The item, however, is okay.";
+					close;
+				}
+
+				if (.@failtype == 2) {
+					next;
+					failedremovecards .@part,2;
+					mes "[Wise Old Woman]";
+					mes "Most unfortunate. I succeeded at removing the cards, but the item itself was destroyed in the process.";
+					close;
+				}
+			}
+		}
+
+		if(.@failchance < 10) {
+			next;
+			failedremovecards .@part,3;
+			mes "[Wise Old Woman]";
+			mes "I have failed to remove the cards. Luckily, however, both the item and the cards are still okay.";
+			close;
+		}
+		next;
+		successremovecards .@part;
+		mes "[Wise Old Woman]";
+		mes "The process was a success. Here are your cards and your item. Farewell.";
+		close;
+	case 2:
+		mes "[All in One]";
+		mes "I charge a flat fee of "+callfunc("F_InsertComma",.zenycost)+" zeny, plus "+callfunc("F_InsertComma",.percardcost)+" zeny for each card I remove from the item. In addition, I need a star crumb and a yellow gemstone to work my magic.";
+		close;
+	case 3:
+		mes "[All in One]";
+		mes "Very well. Return at once if you seek my services.";
+		close;
+	}
+
+
+}
+}

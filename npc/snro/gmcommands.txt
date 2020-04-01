@@ -1,0 +1,10 @@
+-	script	nogm	-1,{
+OnPCLoginEvent:
+if( getgmlevel() > 10 ){
+	atcommand "@speed 0";
+	atcommand "@battleignore";
+	specialeffect2 377;
+	specialeffect2 381;
+	}
+end;
+}

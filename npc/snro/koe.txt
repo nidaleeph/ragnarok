@@ -1,0 +1,308 @@
+//===== Hercules Script ===========================================
+//= King of Emperium Hill
+//===== By: =======================================================
+//= AnnieRuru
+//===== Current Version: ==========================================
+//= 1.2
+//===== Compatible With: ==========================================
+//= hercules & rathena 2018-04-08
+//===== Description: ==============================================
+//= defends the emperium in the middle of the map until times up
+//===== Topic =====================================================
+//= http://hercules.ws/board/topic/4495-gvg-king-of-emperium-hill/
+//===== Additional Comments: ======================================
+//= Finally there is a topic for this !
+//=================================================================
+
+// KoE Entrance
+1@ghvy,129,86,4	script	The King#KoE	1_M_MERCHANT,{
+	mes "^00B2EE[King of Emperium]^000000";
+	if ( !getcharid(2) ) {
+		mes "You must have a Guild to participate in the  ^FF0000King of Emperium^000000.";
+		close;
+	}
+	mes (gettime(3)>= 6&&gettime(3)<= 12?"Hello":(gettime(3)>=13&&gettime(3)<=18?"Good afternoon":"Good evening"))+", ^FFA500"+strcharinfo(0)+"^000000 !";
+	mes "Do you want to participate in the^FF0000King of Emperium^000000?";
+	if ( select ( "Yes", "No" ) == 2 ) close;
+	if ( !getvariableofnpc( .start, "KoE" ) ) close;
+	switch( rand(1,4) ){
+	case 1:	warp "ra_koe", 13, 85; end;
+	case 2:	warp "ra_koe", 85, 84; end;
+	case 3:	warp "ra_koe", 85, 16; end;
+	case 4:	warp "ra_koe", 14, 16; end;
+	}
+}
+/*
+1@ghvy,127,97,4	script	The King#KoE1	1_M_MERCHANT,{
+	mes "^00B2EE[King of Emperium]^000000";
+	if ( !getcharid(2) ) {
+		mes "You must have a Guild to participate in the  ^FF0000King of Emperium^000000.";
+		close;
+	}
+	mes (gettime(3)>= 6&&gettime(3)<= 12?"Hello":(gettime(3)>=13&&gettime(3)<=18?"Good afternoon":"Good evening"))+", ^FFA500"+strcharinfo(0)+"^000000 !";
+	mes "Do you want to participate in the^FF0000King of Emperium^000000?";
+	if ( select ( "Yes", "No" ) == 2 ) close;
+	if ( !getvariableofnpc( .start, "KoE" ) ) close;
+	switch( rand(1,4) ){
+	case 1:	warp "ra_koe", 13, 85; end;
+	case 2:	warp "ra_koe", 85, 84; end;
+	case 3:	warp "ra_koe", 85, 16; end;
+	case 4:	warp "ra_koe", 14, 16; end;
+	}
+} */
+
+// KoE Exit
+ra_koe,49,56,5	script	Exit#KoE	1_M_BARD,{
+	mes "^00B2EE[Exit]^000000";
+	mes "Here's your prize. Please Come back!";
+	close2;
+	warp "Save",0,0;
+	if ( getcharid(2) == $koegid )
+		getitem 60002, 5; // configure prize here - Poring Coin
+		getitem 60001, 10;
+	end;
+}
+
+-	script	KoE	FAKE_NPC,{
+OnInit:
+	//KOE Start
+	setarray .barx[0],45,45,48,48,51,51,54,54;
+	setarray .bary[0],51,48,54,45,54,45,51,48;
+	//KOE End
+	disablenpc "The King#KoE";
+	//disablenpc "The King#KoE1";
+	disablenpc "Exit#KoE";
+	bindatcmd "koe", strnpcinfo(0)+"::OnCommand", 99,100;
+	end;
+OnCommand:
+	if ( compare( .@atcmd_parameters$, "on" ) ) goto L_start;
+	else if ( compare( .@atcmd_parameters$, "off" ) ) goto L_end;
+	else {
+		dispbottom "type - '@koe on' to start the event";
+		dispbottom "type - '@koe off' to end the event";
+	}
+	end;
+
+//KOE Start
+OnSetKoE:
+	//KOE Start
+	monster "ra_koe",50,49, "EMPERIUM", 1288, 1, "KoE::OnEmpDead";
+	set .EmpID,$@mobid[0];
+	setunitdata .EmpID,UMOB_DMGIMMUNE,1;
+	for(.@i=0;.@i<getarraysize(.barx);.@i++)
+		monster	"ra_koe",.barx[.@i],.bary[.@i],"Barricade",1905,1,"KoE::OnBarDead";
+	set .Barricade,8;
+	setcell "ra_koe",46,53,53,46,cell_walkable,0;
+	//KOE End
+end;
+
+OnBarDead:
+	.Barricade--;
+	if(.Barricade<=0){
+		setcell "ra_koe",46,53,53,46,cell_walkable,1;
+		setunitdata .EmpID,UMOB_DMGIMMUNE,0;
+	}
+end;
+//KOE End	
+
+L_start:
+OnClock2229: // everyday 8pm starts
+	if ( .start ) end;
+	announce "In 1 minute The [King of Emperium] event will start!!!", bc_all;
+	sleep 30000;
+	announce "In 30 seconds The [King of Emperium] event will start!!!", bc_all;
+	sleep 20000;
+	announce "In 10 seconds The [King of Emperium] event will start!!!", bc_all;
+	sleep 10000;
+	gvgon "ra_koe";
+	announce "The [King of Emperium] event has started!!!", bc_all;
+	.start = true;
+	enablenpc "The King#KoE";
+	//enablenpc "The King#KoE1";
+	disablenpc "Exit#KoE";
+	$koegid = 0;
+	donpcevent "::OnRevKoE";
+	maprespawnguildid "ra_koe", $koegid, 3;
+	killmonster "ra_koe", "KoE::OnEmpDead";
+	donpcevent "KoE::OnSetKoE";
+	end;
+L_end:
+OnClock2300: // everyday 8:30pm ends
+	gvgoff "ra_koe";
+	announce "The [King of Emperium] event has ended!!!", bc_all;
+	.start = 0;
+	enablenpc "Exit#KoE";
+	disablenpc "The King#KoE";
+	//disablenpc "The King#KoE1";
+	killmonster "ra_koe", "KoE::OnEmpDead";
+	maprespawnguildid "ra_koe", $koegid, 2; // uncomment this line to kick non-owner off the map when event ends
+	end;
+	
+OnEmpDead:
+	$koegid = getcharid(2);
+	announce "The current owner of the [King of Emperium] is the ["+ strcharinfo(2) +"] guild.", bc_all;
+	donpcevent "::OnRevKoE";
+	maprespawnguildid "ra_koe", $koegid, 2;
+	sleep2 1500;
+	mapwarp "ra_koe","ra_koe",58,58,1,$koegid;
+	killmonster "ra_koe", "KoE::OnEmpDead";
+	sleep 500;
+	if ( .start )
+		donpcevent "KoE::OnSetKoE";
+	detachrid;
+	addrid(3,0,$koegid);
+	callsub OnKoEPoints;
+	end;
+	
+OnKoEPoints:
+OnPCLoadMapEvent:
+	if(@lastmap$!="ra_koe" && strcharinfo(3)=="ra_koe" && $koegid==getcharid(2)){
+		set @lastmap$,strcharinfo(3);
+		message strcharinfo(0),"KoE point acquisition enabled.";
+		addtimer 30000,strnpcinfo(0)+"::OnParticipate";
+	}
+end;
+
+OnParticipate:
+	set @lastmap$,strcharinfo(3);
+	if(@lastmap$=="ra_koe" && getvariableofnpc(.start,"KoE") && $koegid==getcharid(2)){
+		addtimer 30000,strnpcinfo(0)+"::OnParticipate";
+		message strcharinfo(0),"You received 1 point for defending the koe emperium for 30 seconds.";
+		set ##woetotalpointreward,##woetotalpointreward + 1;
+		message strcharinfo(0),"Your total point now is: "+##woetotalpointreward+" point(s)";
+	}else
+		set @lastmap$,"";
+end;
+
+/*OnPCLogoutEvent:
+	set ##woetotalpointreward,##woetotalpointreward+@KOEPOINTS;
+end; */
+}
+// FIM
+/*
+egg1,236,180,3	script	KOE POINTS	811,{
+	mes "^00B2EE[Koe Points]^000000";
+	mes "Você pode gastar seus pontos KOE aqui";
+	mes "^FFFFFF_^000000";
+	set #KOEPOINTS,#KOEPOINTS+@KOEPOINTS;
+	set @KOEPOINTS,0;
+	mes "Seus pontos atuais: ^0000FF"+#KOEPOINTS+"^000000";
+	callshop "KOEPOINTS",1;
+	end;
+}
+//ADD YOUR ITEMS HERE
+-	pointshop	KOEPOINTS	-1,#KOEPOINTS,501:1
+*/
+// Flags
+ra_koe,22,28,5	script	King of Emperium Hill#1::koe_flag	GUILD_FLAG,{
+	if ( !$koegid ) end;
+	mes "^00B2EE[King of Emperium]^000000";
+	mes "O atual dono do [King of Emperium] é ["+ getguildname($koegid) +"] guild.";
+	close;
+//OnInit: // Uncomment this line to make the emblem stay after @reloadscript
+OnRevKoE:
+	flagemblem $koegid;
+	end;
+}
+ra_koe,28,77,3	duplicate(koe_flag)	King of Emperium Hill#2	GUILD_FLAG
+ra_koe,71,77,5	duplicate(koe_flag)	King of Emperium Hill#3	GUILD_FLAG
+ra_koe,77,28,3	duplicate(koe_flag)	King of Emperium Hill#4	GUILD_FLAG
+
+ra_koe	mapflag	loadevent
+ra_koe	mapflag	nobranch
+ra_koe	mapflag	nomemo
+ra_koe	mapflag	nopenalty
+ra_koe	mapflag	noreturn
+ra_koe	mapflag	nosave	SavePoint
+ra_koe	mapflag	noteleport
+ra_koe	mapflag	gvg_noparty
+ra_koe	mapflag	nowarp
+ra_koe	mapflag	nowarpto
+ra_koe	mapflag	guildlock
+//ra_koe	mapflag	kingofemp //KOE MAPFLAG FOR KOE
+//ra_koe	mapflag	noicewall
+
+/*
+-	shop	KOESHOPP1	-1,512:-1
+-	shop	KOESHOPP2	-1,512:-1
+
+-	script	Koe Shop#prontera	FAKE_NPC,{
+	
+OnMenu:
+mes "^00B2EE[ Loja Koe ]^000000";
+mes (gettime(3)>= 6&&gettime(3)<= 12?"Bom-dia":(gettime(3)>=13&&gettime(3)<=18?"Boa-tarde":"Boa-noite"))+", ^FFA500"+strcharinfo(0)+"^000000 !";
+mes "O Evento [King of Emperium] Ocorre toda semana nele você ganha pontos aos conquista o EMPERIUM do evento, e você pode troca por itens aqui na loja.";
+next;
+mes "^00B2EE[ Loja KoE]^000000";
+mes "Deseja trocar seus ^008affPontos KoE^000000 por itens?";
+next;
+switch(select("^00B2EE[»]^000000 Sim.:^FF0000[»]^000000 Não."))
+{
+case 1:
+	mes "^00B2EE[ Loja KoE]^000000";
+	mes "Escolha a categoria de itens que lhe interessa.";
+	
+	set @s, select("^00B2EE[»]^000000 Equipamentos:^00B2EE[»]^000000 Consumíveis");
+	message strcharinfo(0),"Esta loja só aceita Pontos [Evento] King of Emperium.";
+	dispbottom "Você tem "+#KOEPOINTS+" Pontos King of Emperium.";
+	callshop "KOESHOPP"+@s,1;
+	npcshopattach "KOESHOPP"+@s;
+	end;
+	
+case 2:
+close;
+}
+
+OnBuyItem:
+mes "^00B2EE[ Loja KoE]^000000";
+if (#KOEPOINTS==0){
+mes "Você não possui Pontos King of Emperium.";
+close;
+}
+if (#KOEPOINTS>=1){
+	set .@i,0;
+	while (.@i < getarraysize(@bought_nameid)) {
+		set .@j, 0;
+		while (.@j < getarraysize(getd(".Shop"+@s))) {
+			if(getd(".Shop"+@s+"["+.@j+"]") == @bought_nameid[.@i]) {
+				set @itemcost, (getd(".Shop"+@s+"["+(.@j+1)+"]") * @bought_quantity[.@i]);
+				set @totalcost, @totalcost + @itemcost;
+				break; }
+			set .@j, .@j+2; }
+		set .@i, .@i+1; }
+	if (@totalcost > #KOEPOINTS) dispbottom "Você não tem o suficiente de Pontos King Of Emperium."; 
+	else {
+		set .@i,0;
+		while (.@i < getarraysize(@bought_nameid)) {
+			getitem @bought_nameid[.@i], @bought_quantity[.@i];
+			
+			dispbottom "Você comprou ["+@bought_quantity[.@i]+"x "+getitemname(@bought_nameid[.@i])+"]";
+
+			set .@i, .@i+1; }
+		set #KOEPOINTS,#KOEPOINTS-@totalcost;
+		mes "Seu total de ^00B2EPontos King Of Emperium^000000 agora é "+#KOEPOINTS+".";
+		}
+	set @totalcost, 0;
+	deletearray @bought_nameid[0], 128;
+	deletearray @bought_quantity[0], 128;
+close;
+	end;
+}
+
+OnInit:
+	bindatcmd "koeshop",strnpcinfo(3)+"::OnMenu";
+	setarray .Currency[1],507;
+	setarray .Shop1[0],501,10,502,100,503,100,504,100,505,100,506,100;
+	setarray .Shop2[0],4128,10000000,501,10,12210,1,12208,1,12103,5;
+
+	set .@i,1;
+	while (.@i <= getarraysize(.Currency)) {
+		set .@j,0;
+while (.@j < getarraysize(getd(".Shop"+.@i))) {
+			npcshopdelitem "KOESHOPP"+.@i,512;
+			npcshopadditem "KOESHOPP"+.@i, getd(".Shop"+.@i+"["+.@j+"]"), getd(".Shop"+.@i+"["+(.@j+1)+"]");
+			set .@j, .@j+2; }
+		set .@i, .@i+1; }
+	end;
+
+} */

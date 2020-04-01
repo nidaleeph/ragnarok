@@ -1,0 +1,54 @@
+-	script	mvprewarders	-1,{
+OnNPCKillEvent:
+	if ( getmonsterinfo( killedrid, MOB_MVPEXP ) && rand(100) <= 10 ) {
+		if ( getcharid(1) ) {
+			getpartymember getcharid(1), 1;
+			getpartymember getcharid(1), 2;
+			for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
+				if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) ) { // what happens if someone in the party member is offline =/
+					.@partymemberaid[.@c] = $@partymemberaid[.@i];
+					.@c++;
+				}
+			}
+			getitem 12103, 1, .@partymemberaid[ rand( .@c ) ];
+announce "Party ["+ strcharinfo(1) +"] has killed "+ getmonsterinfo( killedrid, MOB_NAME ) +" and a Random Party Member got x1 Bloody Branch at "+ strcharinfo(3),0,0x00FF00;
+		}
+		else {
+			getitem 12103, 1;
+announce "Player ["+ strcharinfo(0) +"] has killed "+ getmonsterinfo( killedrid, MOB_NAME ) +" and got x1 Bloody Branch at "+ strcharinfo(3),0,0x00FF00;
+		}
+	} 
+	end;
+}
+
+
+-	script	#mvpannouncer	-1,{
+OnNPCKillEvent: 
+	if (getmonsterinfo(killedrid,22))
+		announce " "+strcharinfo(0)+" has killed MVP Monster named [ "+getmonsterinfo(killedrid,0)+" ] which located at the map of [ "+strcharinfo(3)+" ]",0;
+	end;
+}
+
+
+-	script	mvppods	-1,{ 
+OnNPCKillEvent:
+	if ( getmonsterinfo( killedrid, MOB_MVPEXP ) && rand(100) < 5 ) {
+		if ( getcharid(1) ) {
+			getpartymember getcharid(1), 1;
+			getpartymember getcharid(1), 2;
+			for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
+				if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) ) { // what happens if someone in the party member is offline =/
+					.@partymemberaid[.@c] = $@partymemberaid[.@i];
+					.@c++;
+				}
+			}
+			getitem 60004, rand(5), .@partymemberaid[ rand( .@c ) ];
+announce "Party ["+ strcharinfo(1) +"] has killed "+ getmonsterinfo( killedrid, MOB_NAME ) +" and a Random Party Member got Proof of Donation at "+ strcharinfo(3),0,0x00FF00;
+		}
+		else {
+			getitem 60004, rand(5);
+announce "Player ["+ strcharinfo(0) +"] has killed "+ getmonsterinfo( killedrid, MOB_NAME ) +" and got Proof of Donation at "+ strcharinfo(3),0,0x00FF00;
+		}
+	} 
+	end;
+} 
