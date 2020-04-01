@@ -10,7 +10,7 @@
 
 //Some definitions for the mayor city maps.
 #define MAP_PRONTERA "prontera"
-#define MAP_MAIN "1@ghvy"
+#define MAP_MAIN "serene_city"
 #define MAP_GEFFEN "geffen"
 #define MAP_MORROC "morocc"
 #define MAP_ALBERTA "alberta"

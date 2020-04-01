@@ -1878,7 +1878,7 @@ ACMD_FUNC(go)
 		char map[MAP_NAME_LENGTH];
 		int x, y;
 	} data[] = {
-		{ MAP_MAIN,    129, 92 }, //  0=MAIN
+		{ MAP_SERENE_CITY,    129, 92 }, //  0=MAIN
 		{ MAP_PRONTERA,    156, 191 }, //  0=Prontera
 		{ MAP_MORROC,      156,  93 }, //  1=Morroc
 		{ MAP_GEFFEN,      119,  59 }, //  2=Geffen
@@ -1961,7 +1961,7 @@ ACMD_FUNC(go)
 	for (i = 0; map_name[i]; i++)
 		map_name[i] = TOLOWER(map_name[i]);
 	// try to identify the map name
-	if (strncmp(map_name, "1@ghvy", 3) == 0) {
+	if (strncmp(map_name, "serene_city", 3) == 0) {
 		town = 0;
 	} else if (strncmp(map_name, "prontera", 3) == 0 ||
 	           strncmp(map_name, "prontera", 3) == 0) {
