@@ -14,7 +14,7 @@
 //===== Additional Comments: =================================================
 //= still don't have modify value option, will be done ... in next year ...
 //============================================================================
-
+//tgest
 /*
 create table pvpladder (
 char_id int(11) not null default '0' primary key,
