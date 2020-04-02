@@ -10,10 +10,10 @@
 
 //Some definitions for the mayor city maps.
 #define MAP_PRONTERA "prontera"
-#define MAP_MAIN "serene_city"
+#define MAP_SERENE_CITY "serene_city"
 #define MAP_GEFFEN "geffen"
 #define MAP_MORROC "morocc"
-#define MAP_ALBERTA "alberta"
+#define MAP_ALBERTA "arta"
 #define MAP_PAYON "payon"
 #define MAP_IZLUDE "izlude"
 #define MAP_ALDEBARAN "aldebaran"
